@@ -1,6 +1,8 @@
 """Classifier wrapper for XGBoost with cross-validated early stopping."""
 
-# Authors: Federico Raimondo <f.raimondo@fz-juelich.de>
+# Authors: Federico Raimondo <f.raimondo@fz-juelich.de>,
+#          Nicolás Nieto <n.nieto@fz-juelich.de>,
+#          Lya Paas <l.pass@fz-juelich.de>
 # License: AGPL
 
 from typing import Any
@@ -119,7 +121,11 @@ class _BaseXGBCVEarlyStopping(BaseEstimator):
             self._grouped_cv = True
         else:
             X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=self.test_size, random_state=self.random_state
+                X,
+                y,
+                test_size=self.test_size,
+                random_state=self.random_state,
+                stratify=True,
             )
             self._grouped_cv = False
         # Build a first model
@@ -162,7 +168,7 @@ class _BaseXGBCVEarlyStopping(BaseEstimator):
             The predictions.
 
         """
-        if self._model is None:
+        if not self.__sklearn_is_fitted__():
             raise ValueError("Model not fitted")
         return self._model.predict(X)
 
@@ -175,7 +181,11 @@ class _BaseXGBCVEarlyStopping(BaseEstimator):
             True if the model is fitted, False otherwise.
 
         """
-        return hasattr(self, "_is_fitted") and self._is_fitted
+        return (
+            hasattr(self, "_is_fitted")
+            and self._is_fitted
+            and self._model is not None
+        )
 
     def get_params(self, deep: bool = True) -> dict:
         """Get the parameters of the model.
@@ -358,6 +368,9 @@ class XGBClassifierCVEarlyStopping(_BaseXGBCVEarlyStopping, ClassifierMixin):
             The predictions.
 
         """
+        if not self.__sklearn_is_fitted__(self):
+            raise ValueError("Model not fitted")
+
         out = super().predict(X)
         if self._label_encoder is not None:
             out = self._label_encoder.inverse_transform(out)
@@ -377,6 +390,6 @@ class XGBClassifierCVEarlyStopping(_BaseXGBCVEarlyStopping, ClassifierMixin):
             The predictions.
 
         """
-        if self._model is None:
+        if not self.__sklearn_is_fitted__():
             raise ValueError("Model not fitted")
         return self._model.predict_proba(X)
