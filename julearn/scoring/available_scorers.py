@@ -56,7 +56,7 @@ def get_scorer(name: str) -> ScorerLike:  # type: ignore
         except ValueError:
             raise_error(
                 f"{name} is not a valid scorer "
-                "please use julearn.scorers.list_scorers to get a list"
+                "please use julearn.scoring.list_scorers to get a list"
                 "of possible scorers"
             )
     return scorer
