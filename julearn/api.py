@@ -26,7 +26,7 @@ from .prepare import check_consistency, prepare_input_data
 from .scoring import check_scoring
 from .utils import _compute_cvmdsum, logger, raise_error
 from .utils.logging import DelayedFmtMessage as __
-from .utils.typing import CVLike
+from .utils.typing import CVLike, ScorerLike
 
 
 sklearn.set_config(enable_metadata_routing=True)
@@ -418,7 +418,7 @@ def run_cross_validation(
     return_train_score: bool = False,
     cv: CVLike | None = None,
     groups: str | None = None,
-    scoring: str | list[str] | None = None,
+    scoring: ScorerLike | str | list[str] | None = None,
     pos_labels: str | list[str] | None = None,
     model_params: dict | None = None,
     search_params: dict | None = None,
@@ -491,11 +491,13 @@ def run_cross_validation(
     groups : str | None
         The grouping labels in case a Group CV is used.
         See :ref:`data_usage` for details.
-    scoring : ScorerLike, optional
-        The scoring metric to use.
+    scoring : ScorerLike, str or list[str], optional
+        The scoring metric(s) to calculate.
         See https://scikit-learn.org/stable/modules/model_evaluation.html for
         a comprehensive list of options. If None, use the model's default
         scorer.
+        This is not using in the optimization of hyperparameters.
+        Use the `search_params - scoring` to set the metric for optimization.
     pos_labels : str, int, float or list | None
         The labels to interpret as positive. If not None, every element from y
         will be converted to 1 if is equal or in pos_labels and to 0 if not.
