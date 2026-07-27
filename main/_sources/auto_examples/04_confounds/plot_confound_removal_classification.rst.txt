@@ -68,13 +68,13 @@ Set the logging level to info to see extra information.
 
  .. code-block:: none
 
-    2026-06-04 11:00:45,817 - julearn - INFO - ===== Lib Versions =====
-    2026-06-04 11:00:45,817 - julearn - INFO - numpy: 2.4.6
-    2026-06-04 11:00:45,817 - julearn - INFO - scipy: 1.17.1
-    2026-06-04 11:00:45,817 - julearn - INFO - sklearn: 1.8.0
-    2026-06-04 11:00:45,817 - julearn - INFO - pandas: 3.0.3
-    2026-06-04 11:00:45,817 - julearn - INFO - julearn: 0.2.6.dev476
-    2026-06-04 11:00:45,817 - julearn - INFO - ========================
+    2026-07-27 16:36:12,184 - julearn - INFO - ===== Lib Versions =====
+    2026-07-27 16:36:12,184 - julearn - INFO - numpy: 2.5.1
+    2026-07-27 16:36:12,184 - julearn - INFO - scipy: 1.18.0
+    2026-07-27 16:36:12,184 - julearn - INFO - sklearn: 1.8.0
+    2026-07-27 16:36:12,184 - julearn - INFO - pandas: 3.0.5
+    2026-07-27 16:36:12,185 - julearn - INFO - julearn: 0.2.6.dev484
+    2026-07-27 16:36:12,185 - julearn - INFO - ========================
 
 
 
@@ -196,42 +196,42 @@ Note: confounds by default.
 
  .. code-block:: none
 
-    2026-06-04 11:00:45,820 - julearn - INFO - Setting random seed to 200
-    2026-06-04 11:00:45,820 - julearn - INFO - ==== Input Data ====
-    2026-06-04 11:00:45,820 - julearn - INFO - Using dataframe as input
-    2026-06-04 11:00:45,820 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
-    2026-06-04 11:00:45,820 - julearn - INFO -      Target: species
-    2026-06-04 11:00:45,820 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
-    2026-06-04 11:00:45,820 - julearn - INFO -      X_types:{}
-    2026-06-04 11:00:45,820 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
-    /tmp/tmpepsykigg/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+    2026-07-27 16:36:12,187 - julearn - INFO - Setting random seed to 200
+    2026-07-27 16:36:12,187 - julearn - INFO - ==== Input Data ====
+    2026-07-27 16:36:12,187 - julearn - INFO - Using dataframe as input
+    2026-07-27 16:36:12,187 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
+    2026-07-27 16:36:12,187 - julearn - INFO -      Target: species
+    2026-07-27 16:36:12,187 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
+    2026-07-27 16:36:12,188 - julearn - INFO -      X_types:{}
+    2026-07-27 16:36:12,188 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+    /tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
       warn_with_log(
-    2026-06-04 11:00:45,821 - julearn - INFO - ====================
-    2026-06-04 11:00:45,821 - julearn - INFO - 
-    2026-06-04 11:00:45,821 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
-    2026-06-04 11:00:45,821 - julearn - INFO - Step added
-    2026-06-04 11:00:45,821 - julearn - INFO - Adding step rf that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
-    2026-06-04 11:00:45,822 - julearn - INFO - Step added
-    2026-06-04 11:00:45,822 - julearn - INFO - = Model Parameters =
-    2026-06-04 11:00:45,822 - julearn - INFO - ====================
-    2026-06-04 11:00:45,822 - julearn - INFO - 
-    2026-06-04 11:00:45,822 - julearn - INFO - = Data Information =
-    2026-06-04 11:00:45,822 - julearn - INFO -      Problem type: classification
-    2026-06-04 11:00:45,822 - julearn - INFO -      Number of samples: 100
-    2026-06-04 11:00:45,822 - julearn - INFO -      Number of features: 3
-    2026-06-04 11:00:45,822 - julearn - INFO - ====================
-    2026-06-04 11:00:45,822 - julearn - INFO - 
-    2026-06-04 11:00:45,822 - julearn - INFO -      Number of classes: 2
-    2026-06-04 11:00:45,823 - julearn - INFO -      Target type: str
-    2026-06-04 11:00:45,823 - julearn - INFO -      Class distributions: species
+    2026-07-27 16:36:12,189 - julearn - INFO - ====================
+    2026-07-27 16:36:12,189 - julearn - INFO - 
+    2026-07-27 16:36:12,189 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
+    2026-07-27 16:36:12,189 - julearn - INFO - Step added
+    2026-07-27 16:36:12,189 - julearn - INFO - Adding step rf that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
+    2026-07-27 16:36:12,189 - julearn - INFO - Step added
+    2026-07-27 16:36:12,190 - julearn - INFO - = Model Parameters =
+    2026-07-27 16:36:12,190 - julearn - INFO - ====================
+    2026-07-27 16:36:12,190 - julearn - INFO - 
+    2026-07-27 16:36:12,190 - julearn - INFO - = Data Information =
+    2026-07-27 16:36:12,190 - julearn - INFO -      Problem type: classification
+    2026-07-27 16:36:12,190 - julearn - INFO -      Number of samples: 100
+    2026-07-27 16:36:12,190 - julearn - INFO -      Number of features: 3
+    2026-07-27 16:36:12,190 - julearn - INFO - ====================
+    2026-07-27 16:36:12,190 - julearn - INFO - 
+    2026-07-27 16:36:12,190 - julearn - INFO -      Number of classes: 2
+    2026-07-27 16:36:12,190 - julearn - INFO -      Target type: str
+    2026-07-27 16:36:12,191 - julearn - INFO -      Class distributions: species
     versicolor    50
     virginica     50
     Name: count, dtype: int64
-    2026-06-04 11:00:45,824 - julearn - INFO - Using outer CV scheme StratifiedBootstrap(n_splits=20, random_state=42)
-    2026-06-04 11:00:45,824 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-    /tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+    2026-07-27 16:36:12,191 - julearn - INFO - Using outer CV scheme StratifiedBootstrap(n_splits=20, random_state=42)
+    2026-07-27 16:36:12,192 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+    /tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
       warn_with_log(
-    2026-06-04 11:00:45,824 - julearn - INFO - Binary classification problem detected.
+    2026-07-27 16:36:12,192 - julearn - INFO - Binary classification problem detected.
 
 
 
@@ -302,42 +302,42 @@ the random forest will only be trained using "features".
 
  .. code-block:: none
 
-    2026-06-04 11:00:47,734 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'confound', 'features'}; pattern=(?:__:type:__confound|__:type:__features)>
-    2026-06-04 11:00:47,734 - julearn - INFO - Step added
-    2026-06-04 11:00:47,735 - julearn - INFO - Adding step confound_removal that applies to ColumnTypes<types={'features'}; pattern=(?:__:type:__features)>
-    2026-06-04 11:00:47,735 - julearn - INFO - Setting hyperparameter confounds = confound
-    2026-06-04 11:00:47,735 - julearn - INFO - Step added
-    2026-06-04 11:00:47,735 - julearn - INFO - Adding step rf that applies to ColumnTypes<types={'features'}; pattern=(?:__:type:__features)>
-    2026-06-04 11:00:47,735 - julearn - INFO - Step added
-    2026-06-04 11:00:47,735 - julearn - INFO - Setting random seed to 200
-    2026-06-04 11:00:47,735 - julearn - INFO - ==== Input Data ====
-    2026-06-04 11:00:47,735 - julearn - INFO - Using dataframe as input
-    2026-06-04 11:00:47,735 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-    2026-06-04 11:00:47,736 - julearn - INFO -      Target: species
-    2026-06-04 11:00:47,736 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-    2026-06-04 11:00:47,736 - julearn - INFO -      X_types:{'features': ['sepal_length', 'sepal_width', 'petal_length'], 'confound': ['petal_width']}
-    2026-06-04 11:00:47,736 - julearn - INFO - ====================
-    2026-06-04 11:00:47,736 - julearn - INFO - 
-    2026-06-04 11:00:47,737 - julearn - INFO - = Model Parameters =
-    2026-06-04 11:00:47,737 - julearn - INFO - ====================
-    2026-06-04 11:00:47,737 - julearn - INFO - 
-    2026-06-04 11:00:47,737 - julearn - INFO - = Data Information =
-    2026-06-04 11:00:47,737 - julearn - INFO -      Problem type: classification
-    2026-06-04 11:00:47,737 - julearn - INFO -      Number of samples: 100
-    2026-06-04 11:00:47,737 - julearn - INFO -      Number of features: 4
-    2026-06-04 11:00:47,737 - julearn - INFO - ====================
-    2026-06-04 11:00:47,737 - julearn - INFO - 
-    2026-06-04 11:00:47,738 - julearn - INFO -      Number of classes: 2
-    2026-06-04 11:00:47,738 - julearn - INFO -      Target type: str
-    2026-06-04 11:00:47,738 - julearn - INFO -      Class distributions: species
+    2026-07-27 16:36:14,054 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'confound', 'features'}; pattern=(?:__:type:__confound|__:type:__features)>
+    2026-07-27 16:36:14,055 - julearn - INFO - Step added
+    2026-07-27 16:36:14,055 - julearn - INFO - Adding step confound_removal that applies to ColumnTypes<types={'features'}; pattern=(?:__:type:__features)>
+    2026-07-27 16:36:14,055 - julearn - INFO - Setting hyperparameter confounds = confound
+    2026-07-27 16:36:14,055 - julearn - INFO - Step added
+    2026-07-27 16:36:14,055 - julearn - INFO - Adding step rf that applies to ColumnTypes<types={'features'}; pattern=(?:__:type:__features)>
+    2026-07-27 16:36:14,056 - julearn - INFO - Step added
+    2026-07-27 16:36:14,056 - julearn - INFO - Setting random seed to 200
+    2026-07-27 16:36:14,056 - julearn - INFO - ==== Input Data ====
+    2026-07-27 16:36:14,056 - julearn - INFO - Using dataframe as input
+    2026-07-27 16:36:14,056 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+    2026-07-27 16:36:14,056 - julearn - INFO -      Target: species
+    2026-07-27 16:36:14,056 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+    2026-07-27 16:36:14,056 - julearn - INFO -      X_types:{'features': ['sepal_length', 'sepal_width', 'petal_length'], 'confound': ['petal_width']}
+    2026-07-27 16:36:14,057 - julearn - INFO - ====================
+    2026-07-27 16:36:14,057 - julearn - INFO - 
+    2026-07-27 16:36:14,057 - julearn - INFO - = Model Parameters =
+    2026-07-27 16:36:14,058 - julearn - INFO - ====================
+    2026-07-27 16:36:14,058 - julearn - INFO - 
+    2026-07-27 16:36:14,058 - julearn - INFO - = Data Information =
+    2026-07-27 16:36:14,058 - julearn - INFO -      Problem type: classification
+    2026-07-27 16:36:14,058 - julearn - INFO -      Number of samples: 100
+    2026-07-27 16:36:14,058 - julearn - INFO -      Number of features: 4
+    2026-07-27 16:36:14,058 - julearn - INFO - ====================
+    2026-07-27 16:36:14,058 - julearn - INFO - 
+    2026-07-27 16:36:14,058 - julearn - INFO -      Number of classes: 2
+    2026-07-27 16:36:14,058 - julearn - INFO -      Target type: str
+    2026-07-27 16:36:14,059 - julearn - INFO -      Class distributions: species
     versicolor    50
     virginica     50
     Name: count, dtype: int64
-    2026-06-04 11:00:47,739 - julearn - INFO - Using outer CV scheme StratifiedBootstrap(n_splits=20, random_state=42)
-    2026-06-04 11:00:47,739 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-    /tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+    2026-07-27 16:36:14,059 - julearn - INFO - Using outer CV scheme StratifiedBootstrap(n_splits=20, random_state=42)
+    2026-07-27 16:36:14,060 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+    /tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
       warn_with_log(
-    2026-06-04 11:00:47,739 - julearn - INFO - Binary classification problem detected.
+    2026-07-27 16:36:14,060 - julearn - INFO - Binary classification problem detected.
 
 
 
@@ -660,7 +660,7 @@ a difference in importances.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.021 seconds)
+   **Total running time of the script:** (0 minutes 4.919 seconds)
 
 
 .. _sphx_glr_download_auto_examples_04_confounds_plot_confound_removal_classification.py:

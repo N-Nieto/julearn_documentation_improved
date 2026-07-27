@@ -70,13 +70,13 @@ Set the logging level to info to see extra information
 
  .. code-block:: none
 
-    2026-06-04 11:00:25,792 - julearn - INFO - ===== Lib Versions =====
-    2026-06-04 11:00:25,792 - julearn - INFO - numpy: 2.4.6
-    2026-06-04 11:00:25,792 - julearn - INFO - scipy: 1.17.1
-    2026-06-04 11:00:25,792 - julearn - INFO - sklearn: 1.8.0
-    2026-06-04 11:00:25,792 - julearn - INFO - pandas: 3.0.3
-    2026-06-04 11:00:25,793 - julearn - INFO - julearn: 0.2.6.dev476
-    2026-06-04 11:00:25,793 - julearn - INFO - ========================
+    2026-07-27 16:35:52,373 - julearn - INFO - ===== Lib Versions =====
+    2026-07-27 16:35:52,373 - julearn - INFO - numpy: 2.5.1
+    2026-07-27 16:35:52,373 - julearn - INFO - scipy: 1.18.0
+    2026-07-27 16:35:52,373 - julearn - INFO - sklearn: 1.8.0
+    2026-07-27 16:35:52,373 - julearn - INFO - pandas: 3.0.5
+    2026-07-27 16:35:52,373 - julearn - INFO - julearn: 0.2.6.dev484
+    2026-07-27 16:35:52,373 - julearn - INFO - ========================
 
 
 
@@ -151,42 +151,42 @@ vector machine classifier.
 
  .. code-block:: none
 
-    2026-06-04 11:00:25,796 - julearn - INFO - ==== Input Data ====
-    2026-06-04 11:00:25,796 - julearn - INFO - Using dataframe as input
-    2026-06-04 11:00:25,796 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
-    2026-06-04 11:00:25,796 - julearn - INFO -      Target: species
-    2026-06-04 11:00:25,796 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
-    2026-06-04 11:00:25,796 - julearn - INFO -      X_types:{}
-    2026-06-04 11:00:25,796 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
-    /tmp/tmpepsykigg/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+    2026-07-27 16:35:52,376 - julearn - INFO - ==== Input Data ====
+    2026-07-27 16:35:52,376 - julearn - INFO - Using dataframe as input
+    2026-07-27 16:35:52,377 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
+    2026-07-27 16:35:52,377 - julearn - INFO -      Target: species
+    2026-07-27 16:35:52,377 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
+    2026-07-27 16:35:52,377 - julearn - INFO -      X_types:{}
+    2026-07-27 16:35:52,377 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+    /tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
       warn_with_log(
-    2026-06-04 11:00:25,797 - julearn - INFO - ====================
-    2026-06-04 11:00:25,797 - julearn - INFO - 
-    2026-06-04 11:00:25,797 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
-    2026-06-04 11:00:25,797 - julearn - INFO - Step added
-    2026-06-04 11:00:25,797 - julearn - INFO - Adding step svm that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
-    2026-06-04 11:00:25,797 - julearn - INFO - Step added
-    2026-06-04 11:00:25,798 - julearn - INFO - = Model Parameters =
-    2026-06-04 11:00:25,798 - julearn - INFO - ====================
-    2026-06-04 11:00:25,798 - julearn - INFO - 
-    2026-06-04 11:00:25,798 - julearn - INFO - = Data Information =
-    2026-06-04 11:00:25,798 - julearn - INFO -      Problem type: classification
-    2026-06-04 11:00:25,798 - julearn - INFO -      Number of samples: 120
-    2026-06-04 11:00:25,798 - julearn - INFO -      Number of features: 3
-    2026-06-04 11:00:25,798 - julearn - INFO - ====================
-    2026-06-04 11:00:25,798 - julearn - INFO - 
-    2026-06-04 11:00:25,798 - julearn - INFO -      Number of classes: 3
-    2026-06-04 11:00:25,798 - julearn - INFO -      Target type: str
-    2026-06-04 11:00:25,799 - julearn - INFO -      Class distributions: species
+    2026-07-27 16:35:52,378 - julearn - INFO - ====================
+    2026-07-27 16:35:52,378 - julearn - INFO - 
+    2026-07-27 16:35:52,378 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
+    2026-07-27 16:35:52,378 - julearn - INFO - Step added
+    2026-07-27 16:35:52,378 - julearn - INFO - Adding step svm that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
+    2026-07-27 16:35:52,379 - julearn - INFO - Step added
+    2026-07-27 16:35:52,379 - julearn - INFO - = Model Parameters =
+    2026-07-27 16:35:52,379 - julearn - INFO - ====================
+    2026-07-27 16:35:52,379 - julearn - INFO - 
+    2026-07-27 16:35:52,379 - julearn - INFO - = Data Information =
+    2026-07-27 16:35:52,379 - julearn - INFO -      Problem type: classification
+    2026-07-27 16:35:52,379 - julearn - INFO -      Number of samples: 120
+    2026-07-27 16:35:52,379 - julearn - INFO -      Number of features: 3
+    2026-07-27 16:35:52,379 - julearn - INFO - ====================
+    2026-07-27 16:35:52,379 - julearn - INFO - 
+    2026-07-27 16:35:52,380 - julearn - INFO -      Number of classes: 3
+    2026-07-27 16:35:52,380 - julearn - INFO -      Target type: str
+    2026-07-27 16:35:52,380 - julearn - INFO -      Class distributions: species
     versicolor    40
     virginica     40
     setosa        40
     Name: count, dtype: int64
-    2026-06-04 11:00:25,799 - julearn - INFO - Using outer CV scheme RepeatedKFold(n_repeats=5, n_splits=5, random_state=200) (incl. final model)
-    2026-06-04 11:00:25,800 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-    /tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+    2026-07-27 16:35:52,381 - julearn - INFO - Using outer CV scheme RepeatedKFold(n_repeats=5, n_splits=5, random_state=200) (incl. final model)
+    2026-07-27 16:35:52,381 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+    /tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
       warn_with_log(
-    2026-06-04 11:00:25,800 - julearn - INFO - Multi-class classification problem detected #classes = 3.
+    2026-07-27 16:35:52,381 - julearn - INFO - Multi-class classification problem detected #classes = 3.
 
 
 
@@ -241,8 +241,8 @@ The scores dataframe has all the values for each CV split.
       <tbody>
         <tr>
           <th>0</th>
-          <td>0.003639</td>
-          <td>0.002198</td>
+          <td>0.003586</td>
+          <td>0.002112</td>
           <td>0.916667</td>
           <td>96</td>
           <td>24</td>
@@ -252,8 +252,8 @@ The scores dataframe has all the values for each CV split.
         </tr>
         <tr>
           <th>1</th>
-          <td>0.003595</td>
-          <td>0.002157</td>
+          <td>0.003456</td>
+          <td>0.002098</td>
           <td>0.833333</td>
           <td>96</td>
           <td>24</td>
@@ -263,8 +263,8 @@ The scores dataframe has all the values for each CV split.
         </tr>
         <tr>
           <th>2</th>
-          <td>0.003582</td>
-          <td>0.002160</td>
+          <td>0.003503</td>
+          <td>0.002150</td>
           <td>0.958333</td>
           <td>96</td>
           <td>24</td>
@@ -274,8 +274,8 @@ The scores dataframe has all the values for each CV split.
         </tr>
         <tr>
           <th>3</th>
-          <td>0.003629</td>
-          <td>0.002169</td>
+          <td>0.003462</td>
+          <td>0.002083</td>
           <td>0.916667</td>
           <td>96</td>
           <td>24</td>
@@ -285,8 +285,8 @@ The scores dataframe has all the values for each CV split.
         </tr>
         <tr>
           <th>4</th>
-          <td>0.003572</td>
-          <td>0.002186</td>
+          <td>0.003488</td>
+          <td>0.002206</td>
           <td>0.833333</td>
           <td>96</td>
           <td>24</td>
@@ -532,7 +532,7 @@ the heatmap with annotations.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.347 seconds)
+   **Total running time of the script:** (0 minutes 0.376 seconds)
 
 
 .. _sphx_glr_download_auto_examples_00_starting_plot_cm_acc_multiclass.py:

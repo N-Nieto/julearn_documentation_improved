@@ -222,6 +222,7 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../03_complex_models/index.html">8.4. Complex Models</a><input aria-label="Toggle navigation of 8.4. Complex Models" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_xgboost_early_stopping.html">Simple Model Comparison</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_generate_target.html">Target Generation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_apply_to_target.html">Transforming target variable with z-score</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_hyperparameter_multiple_grids.html">Tuning Multiple Hyperparameters Grids</a></li>
@@ -468,20 +469,20 @@ will discuss the options you have.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Authors: Sami Hamdan &lt;s.hamdan@fz-juelich.de&gt;</span>
 <span class="c1"># License: AGPL</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <a class="sphx-glr-backref-module-sklearn-datasets sphx-glr-backref-type-py-function" href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_diabetes.html#sklearn.datasets.load_diabetes" title="sklearn.datasets.load_diabetes"><span class="n">load_diabetes</span></a>  <span class="c1"># to load data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_diabetes</span>  <span class="c1"># to load data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">julearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">PipelineCreator</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">julearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_cross_validation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">julearn.inspect</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocess</span>
 
 <span class="c1"># Load in the data</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_features</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series"><span class="n">target</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-sklearn-datasets sphx-glr-backref-type-py-function" href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_diabetes.html#sklearn.datasets.load_diabetes" title="sklearn.datasets.load_diabetes"><span class="n">load_diabetes</span></a><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_features</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">load_diabetes</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>First, we can have a look at our features.
 You can see it includes Age, BMI, average blood pressure (bp) and 6 other
 measures from s1 to s6. Furthermore, it includes sex which will be considered
 as a confound in this example.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Features: "</span><span class="p">,</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head" title="pandas.DataFrame.head"><span class="n">df_features</span><span class="o">.</span><span class="n">head</span></a><span class="p">())</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Features: "</span><span class="p">,</span> <span class="n">df_features</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Features:          age       sex       bmi  ...        s4        s5        s6
@@ -495,7 +496,7 @@ as a confound in this example.</p>
 </pre></div>
 </div>
 <p>Second, we can have a look at the target.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Target: "</span><span class="p">,</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.Series.describe.html#pandas.Series.describe" title="pandas.Series.describe"><span class="n">target</span><span class="o">.</span><span class="n">describe</span></a><span class="p">())</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Target: "</span><span class="p">,</span> <span class="n">target</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Target:  count    442.000000
@@ -510,8 +511,8 @@ Name: target, dtype: float64
 </pre></div>
 </div>
 <p>Now, we can put both into one DataFrame:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.copy.html#pandas.DataFrame.copy" title="pandas.DataFrame.copy"><span class="n">df_features</span><span class="o">.</span><span class="n">copy</span></a><span class="p">()</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="p">[</span><span class="s2">"target"</span><span class="p">]</span> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series"><span class="n">target</span></a>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">df_features</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">"target"</span><span class="p">]</span> <span class="o">=</span> <span class="n">target</span>
 </pre></div>
 </div>
 <p>In the following we will explore different settings of confound removal
@@ -528,14 +529,14 @@ Finally, we will fit a linear regression model.</p>
 <span class="n">creator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"linreg"</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:45,163 - julearn - INFO - Adding step confound_removal that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:45,163 - julearn - INFO - Step added
-2026-06-04 11:00:45,163 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:45,164 - julearn - INFO - Step added
-2026-06-04 11:00:45,164 - julearn - INFO - Adding step linreg that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:45,164 - julearn - INFO - Step added
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:11,561 - julearn - INFO - Adding step confound_removal that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:11,562 - julearn - INFO - Step added
+2026-07-27 16:36:11,562 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:11,562 - julearn - INFO - Step added
+2026-07-27 16:36:11,562 - julearn - INFO - Adding step linreg that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:11,562 - julearn - INFO - Step added
 
-&lt;julearn.pipeline.pipeline_creator.PipelineCreator object at 0x7f2d523ac9d0&gt;
+&lt;julearn.pipeline.pipeline_creator.PipelineCreator object at 0x7fd328af8c50&gt;
 </pre></div>
 </div>
 <p>Now we need to set the <code class="docutils literal notranslate"><span class="pre">X_types</span></code> argument of the <code class="docutils literal notranslate"><span class="pre">run_cross_validation</span></code>
@@ -544,42 +545,42 @@ types of X to the features that belong to this type. In this example, we
 have two types of features: <cite>continuous</cite> and <cite>confound</cite>. The <cite>continuous</cite>
 features are the features that we want to deconfound and the <cite>confound</cite>
 features are the features that we want to remove from the <cite>continuous</cite>.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">feature_names</span></a> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.drop.html#pandas.DataFrame.drop" title="pandas.DataFrame.drop"><span class="n">df_features</span><span class="o">.</span><span class="n">drop</span></a><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">"sex"</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-<a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict"><span class="n">X_types</span></a> <span class="o">=</span> <span class="p">{</span><span class="s2">"continuous"</span><span class="p">:</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">feature_names</span></a><span class="p">,</span> <span class="s2">"confound"</span><span class="p">:</span> <span class="s2">"sex"</span><span class="p">}</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_features</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">"sex"</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">X_types</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"continuous"</span><span class="p">:</span> <span class="n">feature_names</span><span class="p">,</span> <span class="s2">"confound"</span><span class="p">:</span> <span class="s2">"sex"</span><span class="p">}</span>
 
-<a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">feature_names</span></a> <span class="o">+</span> <span class="p">[</span><span class="s2">"sex"</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">feature_names</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"sex"</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Now we can run the cross validation and get the scores.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
     <span class="n">y</span><span class="o">=</span><span class="s2">"target"</span><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict"><span class="n">X_types</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict"><span class="n">X_types</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a><span class="o">=</span><span class="n">creator</span><span class="p">,</span>
+    <span class="n">X_types</span><span class="o">=</span><span class="n">X_types</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">creator</span><span class="p">,</span>
     <span class="n">return_estimator</span><span class="o">=</span><span class="s2">"final"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:45,165 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:00:45,165 - julearn - INFO - Using dataframe as input
-2026-06-04 11:00:45,165 - julearn - INFO -      Features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
-2026-06-04 11:00:45,165 - julearn - INFO -      Target: target
-2026-06-04 11:00:45,165 - julearn - INFO -      Expanded features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
-2026-06-04 11:00:45,165 - julearn - INFO -      X_types:{'continuous': ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6'], 'confound': ['sex']}
-2026-06-04 11:00:45,166 - julearn - INFO - ====================
-2026-06-04 11:00:45,166 - julearn - INFO -
-2026-06-04 11:00:45,166 - julearn - INFO - = Model Parameters =
-2026-06-04 11:00:45,167 - julearn - INFO - ====================
-2026-06-04 11:00:45,167 - julearn - INFO -
-2026-06-04 11:00:45,167 - julearn - INFO - = Data Information =
-2026-06-04 11:00:45,167 - julearn - INFO -      Problem type: regression
-2026-06-04 11:00:45,167 - julearn - INFO -      Number of samples: 442
-2026-06-04 11:00:45,167 - julearn - INFO -      Number of features: 10
-2026-06-04 11:00:45,167 - julearn - INFO - ====================
-2026-06-04 11:00:45,167 - julearn - INFO -
-2026-06-04 11:00:45,167 - julearn - INFO -      Target type: float64
-2026-06-04 11:00:45,167 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:11,563 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:36:11,563 - julearn - INFO - Using dataframe as input
+2026-07-27 16:36:11,563 - julearn - INFO -      Features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
+2026-07-27 16:36:11,563 - julearn - INFO -      Target: target
+2026-07-27 16:36:11,564 - julearn - INFO -      Expanded features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
+2026-07-27 16:36:11,564 - julearn - INFO -      X_types:{'continuous': ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6'], 'confound': ['sex']}
+2026-07-27 16:36:11,564 - julearn - INFO - ====================
+2026-07-27 16:36:11,564 - julearn - INFO -
+2026-07-27 16:36:11,565 - julearn - INFO - = Model Parameters =
+2026-07-27 16:36:11,565 - julearn - INFO - ====================
+2026-07-27 16:36:11,565 - julearn - INFO -
+2026-07-27 16:36:11,565 - julearn - INFO - = Data Information =
+2026-07-27 16:36:11,565 - julearn - INFO -      Problem type: regression
+2026-07-27 16:36:11,565 - julearn - INFO -      Number of samples: 442
+2026-07-27 16:36:11,565 - julearn - INFO -      Number of features: 10
+2026-07-27 16:36:11,565 - julearn - INFO - ====================
+2026-07-27 16:36:11,565 - julearn - INFO -
+2026-07-27 16:36:11,565 - julearn - INFO -      Target type: float64
+2026-07-27 16:36:11,565 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
 </pre></div>
 </div>
 <p>We can use the <code class="docutils literal notranslate"><span class="pre">preprocess</span></code> method of the <code class="docutils literal notranslate"><span class="pre">inspect</span></code> module to inspect the
@@ -587,8 +588,8 @@ transformations steps of the returned estimator.
 By providing a step name to the <code class="docutils literal notranslate"><span class="pre">until</span></code> argument of the
 <code class="docutils literal notranslate"><span class="pre">preprocess</span></code> method we return the transformed X and y up to
 the provided step (inclusive).</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_deconfounded</span></a> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="p">,</span> <span class="n">until</span><span class="o">=</span><span class="s2">"confound_removal"</span><span class="p">)</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head" title="pandas.DataFrame.head"><span class="n">df_deconfounded</span><span class="o">.</span><span class="n">head</span></a><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_deconfounded</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">until</span><span class="o">=</span><span class="s2">"confound_removal"</span><span class="p">)</span>
+<span class="n">df_deconfounded</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -736,52 +737,52 @@ This will keep the confounds after confound removal.</p>
 <span class="n">creator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"linreg"</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:45,322 - julearn - INFO - Adding step confound_removal that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:45,322 - julearn - INFO - Setting hyperparameter keep_confounds = True
-2026-06-04 11:00:45,322 - julearn - INFO - Step added
-2026-06-04 11:00:45,322 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:45,323 - julearn - INFO - Step added
-2026-06-04 11:00:45,323 - julearn - INFO - Adding step linreg that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:45,323 - julearn - INFO - Step added
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:11,715 - julearn - INFO - Adding step confound_removal that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:11,715 - julearn - INFO - Setting hyperparameter keep_confounds = True
+2026-07-27 16:36:11,715 - julearn - INFO - Step added
+2026-07-27 16:36:11,715 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:11,715 - julearn - INFO - Step added
+2026-07-27 16:36:11,716 - julearn - INFO - Adding step linreg that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:11,716 - julearn - INFO - Step added
 
-&lt;julearn.pipeline.pipeline_creator.PipelineCreator object at 0x7f2d50288fd0&gt;
+&lt;julearn.pipeline.pipeline_creator.PipelineCreator object at 0x7fd3111fafd0&gt;
 </pre></div>
 </div>
 <p>Now we can run the cross validation and get the scores.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
     <span class="n">y</span><span class="o">=</span><span class="s2">"target"</span><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict"><span class="n">X_types</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict"><span class="n">X_types</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a><span class="o">=</span><span class="n">creator</span><span class="p">,</span>
+    <span class="n">X_types</span><span class="o">=</span><span class="n">X_types</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">creator</span><span class="p">,</span>
     <span class="n">return_estimator</span><span class="o">=</span><span class="s2">"final"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:45,323 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:00:45,323 - julearn - INFO - Using dataframe as input
-2026-06-04 11:00:45,323 - julearn - INFO -      Features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
-2026-06-04 11:00:45,324 - julearn - INFO -      Target: target
-2026-06-04 11:00:45,324 - julearn - INFO -      Expanded features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
-2026-06-04 11:00:45,324 - julearn - INFO -      X_types:{'continuous': ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6'], 'confound': ['sex']}
-2026-06-04 11:00:45,325 - julearn - INFO - ====================
-2026-06-04 11:00:45,325 - julearn - INFO -
-2026-06-04 11:00:45,325 - julearn - INFO - = Model Parameters =
-2026-06-04 11:00:45,325 - julearn - INFO - ====================
-2026-06-04 11:00:45,325 - julearn - INFO -
-2026-06-04 11:00:45,325 - julearn - INFO - = Data Information =
-2026-06-04 11:00:45,325 - julearn - INFO -      Problem type: regression
-2026-06-04 11:00:45,325 - julearn - INFO -      Number of samples: 442
-2026-06-04 11:00:45,325 - julearn - INFO -      Number of features: 10
-2026-06-04 11:00:45,325 - julearn - INFO - ====================
-2026-06-04 11:00:45,326 - julearn - INFO -
-2026-06-04 11:00:45,326 - julearn - INFO -      Target type: float64
-2026-06-04 11:00:45,326 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:11,716 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:36:11,716 - julearn - INFO - Using dataframe as input
+2026-07-27 16:36:11,716 - julearn - INFO -      Features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
+2026-07-27 16:36:11,716 - julearn - INFO -      Target: target
+2026-07-27 16:36:11,716 - julearn - INFO -      Expanded features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
+2026-07-27 16:36:11,717 - julearn - INFO -      X_types:{'continuous': ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6'], 'confound': ['sex']}
+2026-07-27 16:36:11,717 - julearn - INFO - ====================
+2026-07-27 16:36:11,717 - julearn - INFO -
+2026-07-27 16:36:11,718 - julearn - INFO - = Model Parameters =
+2026-07-27 16:36:11,718 - julearn - INFO - ====================
+2026-07-27 16:36:11,718 - julearn - INFO -
+2026-07-27 16:36:11,718 - julearn - INFO - = Data Information =
+2026-07-27 16:36:11,718 - julearn - INFO -      Problem type: regression
+2026-07-27 16:36:11,718 - julearn - INFO -      Number of samples: 442
+2026-07-27 16:36:11,718 - julearn - INFO -      Number of features: 10
+2026-07-27 16:36:11,718 - julearn - INFO - ====================
+2026-07-27 16:36:11,718 - julearn - INFO -
+2026-07-27 16:36:11,718 - julearn - INFO -      Target type: float64
+2026-07-27 16:36:11,719 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
 </pre></div>
 </div>
 <p>As you can see this kept the confound variable <code class="docutils literal notranslate"><span class="pre">sex</span></code> in the data.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_deconfounded</span></a> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="p">,</span> <span class="n">until</span><span class="o">=</span><span class="s2">"confound_removal"</span><span class="p">)</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head" title="pandas.DataFrame.head"><span class="n">df_deconfounded</span><span class="o">.</span><span class="n">head</span></a><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_deconfounded</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">until</span><span class="o">=</span><span class="s2">"confound_removal"</span><span class="p">)</span>
+<span class="n">df_deconfounded</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -890,8 +891,8 @@ This will keep the confounds after confound removal.</p>
 This is the case because by default transformers only transform continuous
 features (including features without a specified type) and ignore confounds
 and categorical variables.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_transformed</span></a> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="p">)</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head" title="pandas.DataFrame.head"><span class="n">df_transformed</span><span class="o">.</span><span class="n">head</span></a><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_transformed</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="n">df_transformed</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -1001,7 +1002,7 @@ features together with the confound to predict the target. However, in the
 pipeline creator, the model is only applied to the continuous features.
 This means that the confound is not used in the model.
 Here we can see that the model is using 9 features.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">model</span><span class="o">.</span><span class="n">steps</span></a><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a><span class="o">.</span><span class="n">coef_</span><span class="p">))</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>9
@@ -1014,43 +1015,43 @@ removal.</p>
 <span class="n">creator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"pca"</span><span class="p">)</span>
 <span class="n">creator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"linreg"</span><span class="p">,</span> <span class="n">apply_to</span><span class="o">=</span><span class="s2">"*"</span><span class="p">)</span>
 
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span>
+<span class="n">scores</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
     <span class="n">y</span><span class="o">=</span><span class="s2">"target"</span><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict"><span class="n">X_types</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict"><span class="n">X_types</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">data</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a><span class="o">=</span><span class="n">creator</span><span class="p">,</span>
+    <span class="n">X_types</span><span class="o">=</span><span class="n">X_types</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">creator</span><span class="p">,</span>
     <span class="n">return_estimator</span><span class="o">=</span><span class="s2">"final"</span><span class="p">,</span>
 <span class="p">)</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores</span></a>
+<span class="n">scores</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:45,494 - julearn - INFO - Adding step confound_removal that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:45,494 - julearn - INFO - Setting hyperparameter keep_confounds = True
-2026-06-04 11:00:45,494 - julearn - INFO - Step added
-2026-06-04 11:00:45,494 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:45,494 - julearn - INFO - Step added
-2026-06-04 11:00:45,494 - julearn - INFO - Adding step linreg that applies to ColumnTypes&lt;types={'*'}; pattern=.*&gt;
-2026-06-04 11:00:45,495 - julearn - INFO - Step added
-2026-06-04 11:00:45,495 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:00:45,495 - julearn - INFO - Using dataframe as input
-2026-06-04 11:00:45,495 - julearn - INFO -      Features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
-2026-06-04 11:00:45,495 - julearn - INFO -      Target: target
-2026-06-04 11:00:45,495 - julearn - INFO -      Expanded features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
-2026-06-04 11:00:45,495 - julearn - INFO -      X_types:{'continuous': ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6'], 'confound': ['sex']}
-2026-06-04 11:00:45,496 - julearn - INFO - ====================
-2026-06-04 11:00:45,496 - julearn - INFO -
-2026-06-04 11:00:45,496 - julearn - INFO - = Model Parameters =
-2026-06-04 11:00:45,496 - julearn - INFO - ====================
-2026-06-04 11:00:45,496 - julearn - INFO -
-2026-06-04 11:00:45,496 - julearn - INFO - = Data Information =
-2026-06-04 11:00:45,496 - julearn - INFO -      Problem type: regression
-2026-06-04 11:00:45,497 - julearn - INFO -      Number of samples: 442
-2026-06-04 11:00:45,497 - julearn - INFO -      Number of features: 10
-2026-06-04 11:00:45,497 - julearn - INFO - ====================
-2026-06-04 11:00:45,497 - julearn - INFO -
-2026-06-04 11:00:45,497 - julearn - INFO -      Target type: float64
-2026-06-04 11:00:45,497 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:11,881 - julearn - INFO - Adding step confound_removal that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:11,881 - julearn - INFO - Setting hyperparameter keep_confounds = True
+2026-07-27 16:36:11,881 - julearn - INFO - Step added
+2026-07-27 16:36:11,881 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:11,882 - julearn - INFO - Step added
+2026-07-27 16:36:11,882 - julearn - INFO - Adding step linreg that applies to ColumnTypes&lt;types={'*'}; pattern=.*&gt;
+2026-07-27 16:36:11,882 - julearn - INFO - Step added
+2026-07-27 16:36:11,882 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:36:11,882 - julearn - INFO - Using dataframe as input
+2026-07-27 16:36:11,882 - julearn - INFO -      Features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
+2026-07-27 16:36:11,882 - julearn - INFO -      Target: target
+2026-07-27 16:36:11,882 - julearn - INFO -      Expanded features: ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6', 'sex']
+2026-07-27 16:36:11,882 - julearn - INFO -      X_types:{'continuous': ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6'], 'confound': ['sex']}
+2026-07-27 16:36:11,883 - julearn - INFO - ====================
+2026-07-27 16:36:11,883 - julearn - INFO -
+2026-07-27 16:36:11,883 - julearn - INFO - = Model Parameters =
+2026-07-27 16:36:11,884 - julearn - INFO - ====================
+2026-07-27 16:36:11,884 - julearn - INFO -
+2026-07-27 16:36:11,884 - julearn - INFO - = Data Information =
+2026-07-27 16:36:11,884 - julearn - INFO -      Problem type: regression
+2026-07-27 16:36:11,884 - julearn - INFO -      Number of samples: 442
+2026-07-27 16:36:11,884 - julearn - INFO -      Number of features: 10
+2026-07-27 16:36:11,884 - julearn - INFO - ====================
+2026-07-27 16:36:11,884 - julearn - INFO -
+2026-07-27 16:36:11,884 - julearn - INFO -      Target type: float64
+2026-07-27 16:36:11,884 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -1085,8 +1086,8 @@ removal.</p>
 <tbody>
 <tr>
 <th>0</th>
-<td>0.016354</td>
-<td>0.006006</td>
+<td>0.016075</td>
+<td>0.005848</td>
 <td>0.429556</td>
 <td>353</td>
 <td>89</td>
@@ -1096,8 +1097,8 @@ removal.</p>
 </tr>
 <tr>
 <th>1</th>
-<td>0.016402</td>
-<td>0.005940</td>
+<td>0.015968</td>
+<td>0.005821</td>
 <td>0.522599</td>
 <td>353</td>
 <td>89</td>
@@ -1107,8 +1108,8 @@ removal.</p>
 </tr>
 <tr>
 <th>2</th>
-<td>0.016822</td>
-<td>0.006043</td>
+<td>0.016600</td>
+<td>0.005816</td>
 <td>0.482681</td>
 <td>354</td>
 <td>88</td>
@@ -1118,8 +1119,8 @@ removal.</p>
 </tr>
 <tr>
 <th>3</th>
-<td>0.016481</td>
-<td>0.006140</td>
+<td>0.015888</td>
+<td>0.005807</td>
 <td>0.426498</td>
 <td>354</td>
 <td>88</td>
@@ -1129,8 +1130,8 @@ removal.</p>
 </tr>
 <tr>
 <th>4</th>
-<td>0.016645</td>
-<td>0.006025</td>
+<td>0.016004</td>
+<td>0.005885</td>
 <td>0.550248</td>
 <td>354</td>
 <td>88</td>
@@ -1149,13 +1150,13 @@ step to <code class="docutils literal notranslate"><span class="pre">*</span></c
 (including confounds and categorical variables).
 Here we can see that the model is using 10 features (9 deconfounded features
 and the confound).</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">model</span><span class="o">.</span><span class="n">steps</span></a><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">))</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>10
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.490 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.474 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-04-confounds-run-return-confounds-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/6c774f4eca75f20ba6b46ff437a810e9/run_return_confounds.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">run_return_confounds.ipynb</span></code></a></p>
@@ -1233,7 +1234,7 @@ and the confound).</p>
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=6cf030bf"></script>
+</div><script src="../../_static/documentation_options.js?v=8af287f3"></script>
 <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

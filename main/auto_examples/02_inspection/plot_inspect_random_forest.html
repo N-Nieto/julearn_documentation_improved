@@ -222,6 +222,7 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../03_complex_models/index.html">8.4. Complex Models</a><input aria-label="Toggle navigation of 8.4. Complex Models" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_xgboost_early_stopping.html">Simple Model Comparison</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_generate_target.html">Target Generation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_apply_to_target.html">Transforming target variable with z-score</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_hyperparameter_multiple_grids.html">Tuning Multiple Hyperparameters Grids</a></li>
@@ -478,35 +479,35 @@ using a Random Forest classifier and analyse the model.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">configure_logging</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s2">"INFO"</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:31,211 - julearn - INFO - ===== Lib Versions =====
-2026-06-04 11:00:31,211 - julearn - INFO - numpy: 2.4.6
-2026-06-04 11:00:31,212 - julearn - INFO - scipy: 1.17.1
-2026-06-04 11:00:31,212 - julearn - INFO - sklearn: 1.8.0
-2026-06-04 11:00:31,212 - julearn - INFO - pandas: 3.0.3
-2026-06-04 11:00:31,212 - julearn - INFO - julearn: 0.2.6.dev476
-2026-06-04 11:00:31,212 - julearn - INFO - ========================
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:57,746 - julearn - INFO - ===== Lib Versions =====
+2026-07-27 16:35:57,746 - julearn - INFO - numpy: 2.5.1
+2026-07-27 16:35:57,746 - julearn - INFO - scipy: 1.18.0
+2026-07-27 16:35:57,746 - julearn - INFO - sklearn: 1.8.0
+2026-07-27 16:35:57,746 - julearn - INFO - pandas: 3.0.5
+2026-07-27 16:35:57,746 - julearn - INFO - julearn: 0.2.6.dev484
+2026-07-27 16:35:57,746 - julearn - INFO - ========================
 </pre></div>
 </div>
 <section id="random-forest-variable-importance">
 <h2>Random Forest variable importance<a class="headerlink" href="#random-forest-variable-importance" title="Link to this heading">¶</a></h2>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"iris"</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_iris</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"iris"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The dataset has three kind of species. We will keep two to perform a binary
 classification.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a><span class="p">[</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a><span class="p">[</span><span class="s2">"species"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">"versicolor"</span><span class="p">,</span> <span class="s2">"virginica"</span><span class="p">])]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_iris</span> <span class="o">=</span> <span class="n">df_iris</span><span class="p">[</span><span class="n">df_iris</span><span class="p">[</span><span class="s2">"species"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">"versicolor"</span><span class="p">,</span> <span class="s2">"virginica"</span><span class="p">])]</span>
 
-<a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a> <span class="o">=</span> <span class="p">[</span><span class="s2">"sepal_length"</span><span class="p">,</span> <span class="s2">"sepal_width"</span><span class="p">,</span> <span class="s2">"petal_length"</span><span class="p">]</span>
-<a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a> <span class="o">=</span> <span class="s2">"species"</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"sepal_length"</span><span class="p">,</span> <span class="s2">"sepal_width"</span><span class="p">,</span> <span class="s2">"petal_length"</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="s2">"species"</span>
 </pre></div>
 </div>
 <p>We will use a Random Forest classifier. By setting
 <cite>return_estimator=’final’</cite>, the <a class="reference internal" href="../../api/generated/julearn.run_cross_validation.html#julearn.run_cross_validation" title="julearn.run_cross_validation"><code class="xref py py-func docutils literal notranslate"><span class="pre">run_cross_validation()</span></code></a> function
 returns the estimator fitted with all the data.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model_iris</span></a> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span><span class="p">,</span> <span class="n">model_iris</span> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_iris</span><span class="p">,</span>
     <span class="n">model</span><span class="o">=</span><span class="s2">"rf"</span><span class="p">,</span>
     <span class="n">preprocess</span><span class="o">=</span><span class="s2">"zscore"</span><span class="p">,</span>
     <span class="n">problem_type</span><span class="o">=</span><span class="s2">"classification"</span><span class="p">,</span>
@@ -514,58 +515,58 @@ returns the estimator fitted with all the data.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:31,214 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:00:31,214 - julearn - INFO - Using dataframe as input
-2026-06-04 11:00:31,214 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:31,214 - julearn - INFO -      Target: species
-2026-06-04 11:00:31,214 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:31,214 - julearn - INFO -      X_types:{}
-2026-06-04 11:00:31,214 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
-/tmp/tmpepsykigg/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:57,748 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:35:57,748 - julearn - INFO - Using dataframe as input
+2026-07-27 16:35:57,748 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:57,748 - julearn - INFO -      Target: species
+2026-07-27 16:35:57,749 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:57,749 - julearn - INFO -      X_types:{}
+2026-07-27 16:35:57,749 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
   warn_with_log(
-2026-06-04 11:00:31,215 - julearn - INFO - ====================
-2026-06-04 11:00:31,215 - julearn - INFO -
-2026-06-04 11:00:31,215 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:31,215 - julearn - INFO - Step added
-2026-06-04 11:00:31,216 - julearn - INFO - Adding step rf that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:31,216 - julearn - INFO - Step added
-2026-06-04 11:00:31,216 - julearn - INFO - = Model Parameters =
-2026-06-04 11:00:31,216 - julearn - INFO - ====================
-2026-06-04 11:00:31,216 - julearn - INFO -
-2026-06-04 11:00:31,216 - julearn - INFO - = Data Information =
-2026-06-04 11:00:31,216 - julearn - INFO -      Problem type: classification
-2026-06-04 11:00:31,216 - julearn - INFO -      Number of samples: 100
-2026-06-04 11:00:31,217 - julearn - INFO -      Number of features: 3
-2026-06-04 11:00:31,217 - julearn - INFO - ====================
-2026-06-04 11:00:31,217 - julearn - INFO -
-2026-06-04 11:00:31,217 - julearn - INFO -      Number of classes: 2
-2026-06-04 11:00:31,217 - julearn - INFO -      Target type: str
-2026-06-04 11:00:31,217 - julearn - INFO -      Class distributions: species
+2026-07-27 16:35:57,750 - julearn - INFO - ====================
+2026-07-27 16:35:57,750 - julearn - INFO -
+2026-07-27 16:35:57,750 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:57,750 - julearn - INFO - Step added
+2026-07-27 16:35:57,750 - julearn - INFO - Adding step rf that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:57,750 - julearn - INFO - Step added
+2026-07-27 16:35:57,751 - julearn - INFO - = Model Parameters =
+2026-07-27 16:35:57,751 - julearn - INFO - ====================
+2026-07-27 16:35:57,751 - julearn - INFO -
+2026-07-27 16:35:57,751 - julearn - INFO - = Data Information =
+2026-07-27 16:35:57,751 - julearn - INFO -      Problem type: classification
+2026-07-27 16:35:57,751 - julearn - INFO -      Number of samples: 100
+2026-07-27 16:35:57,751 - julearn - INFO -      Number of features: 3
+2026-07-27 16:35:57,751 - julearn - INFO - ====================
+2026-07-27 16:35:57,751 - julearn - INFO -
+2026-07-27 16:35:57,751 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:35:57,751 - julearn - INFO -      Target type: str
+2026-07-27 16:35:57,752 - julearn - INFO -      Class distributions: species
 versicolor    50
 virginica     50
 Name: count, dtype: int64
-2026-06-04 11:00:31,218 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
-2026-06-04 11:00:31,218 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:35:57,753 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
+2026-07-27 16:35:57,753 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:00:31,219 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:35:57,753 - julearn - INFO - Binary classification problem detected.
 </pre></div>
 </div>
 <p>This type of classifier has an internal variable that can inform us on how
 <em>important</em> is each of the features. Caution: read the proper <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>
 documentation <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier" title="(in scikit-learn v1.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code></a> to understand
 how this learning algorithm works.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-sklearn-ensemble sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier" title="sklearn.ensemble.RandomForestClassifier"><span class="n">rf</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model_iris</span></a><span class="p">[</span><span class="s2">"rf"</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">rf</span> <span class="o">=</span> <span class="n">model_iris</span><span class="p">[</span><span class="s2">"rf"</span><span class="p">]</span>
 
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">to_plot</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span></a><span class="p">(</span>
+<span class="n">to_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">{</span>
-        <span class="s2">"variable"</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"_"</span><span class="p">,</span> <span class="s2">" "</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">],</span>
-        <span class="s2">"importance"</span><span class="p">:</span> <a class="sphx-glr-backref-module-sklearn-ensemble sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier" title="sklearn.ensemble.RandomForestClassifier"><span class="n">rf</span></a><span class="o">.</span><span class="n">feature_importances_</span><span class="p">,</span>
+        <span class="s2">"variable"</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"_"</span><span class="p">,</span> <span class="s2">" "</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">],</span>
+        <span class="s2">"importance"</span><span class="p">:</span> <span class="n">rf</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">,</span>
     <span class="p">}</span>
 <span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">"importance"</span><span class="p">,</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="o">=</span><span class="s2">"variable"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">to_plot</span></a><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">"importance"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">"variable"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">to_plot</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Variable Importances for Random Forest Classifier"</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
@@ -576,10 +577,10 @@ all the feature importances were obtained by fitting on the entire dataset,
 while the performance was estimated using cross validation.</p>
 <p>By specifying <cite>return_estimator=’cv’</cite>, we can get, for each fold, the fitted
 estimator.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores</span></a> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_iris</span><span class="p">,</span>
     <span class="n">model</span><span class="o">=</span><span class="s2">"rf"</span><span class="p">,</span>
     <span class="n">preprocess</span><span class="o">=</span><span class="s2">"zscore"</span><span class="p">,</span>
     <span class="n">problem_type</span><span class="o">=</span><span class="s2">"classification"</span><span class="p">,</span>
@@ -587,61 +588,61 @@ estimator.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:31,870 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:00:31,870 - julearn - INFO - Using dataframe as input
-2026-06-04 11:00:31,870 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:31,871 - julearn - INFO -      Target: species
-2026-06-04 11:00:31,871 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:31,871 - julearn - INFO -      X_types:{}
-2026-06-04 11:00:31,871 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
-/tmp/tmpepsykigg/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:58,395 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:35:58,395 - julearn - INFO - Using dataframe as input
+2026-07-27 16:35:58,395 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:58,395 - julearn - INFO -      Target: species
+2026-07-27 16:35:58,395 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:58,395 - julearn - INFO -      X_types:{}
+2026-07-27 16:35:58,395 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
   warn_with_log(
-2026-06-04 11:00:31,872 - julearn - INFO - ====================
-2026-06-04 11:00:31,872 - julearn - INFO -
-2026-06-04 11:00:31,872 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:31,872 - julearn - INFO - Step added
-2026-06-04 11:00:31,872 - julearn - INFO - Adding step rf that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:31,873 - julearn - INFO - Step added
-2026-06-04 11:00:31,873 - julearn - INFO - = Model Parameters =
-2026-06-04 11:00:31,873 - julearn - INFO - ====================
-2026-06-04 11:00:31,873 - julearn - INFO -
-2026-06-04 11:00:31,873 - julearn - INFO - = Data Information =
-2026-06-04 11:00:31,873 - julearn - INFO -      Problem type: classification
-2026-06-04 11:00:31,873 - julearn - INFO -      Number of samples: 100
-2026-06-04 11:00:31,873 - julearn - INFO -      Number of features: 3
-2026-06-04 11:00:31,873 - julearn - INFO - ====================
-2026-06-04 11:00:31,874 - julearn - INFO -
-2026-06-04 11:00:31,874 - julearn - INFO -      Number of classes: 2
-2026-06-04 11:00:31,874 - julearn - INFO -      Target type: str
-2026-06-04 11:00:31,874 - julearn - INFO -      Class distributions: species
+2026-07-27 16:35:58,396 - julearn - INFO - ====================
+2026-07-27 16:35:58,396 - julearn - INFO -
+2026-07-27 16:35:58,397 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:58,397 - julearn - INFO - Step added
+2026-07-27 16:35:58,397 - julearn - INFO - Adding step rf that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:58,397 - julearn - INFO - Step added
+2026-07-27 16:35:58,397 - julearn - INFO - = Model Parameters =
+2026-07-27 16:35:58,397 - julearn - INFO - ====================
+2026-07-27 16:35:58,398 - julearn - INFO -
+2026-07-27 16:35:58,398 - julearn - INFO - = Data Information =
+2026-07-27 16:35:58,398 - julearn - INFO -      Problem type: classification
+2026-07-27 16:35:58,398 - julearn - INFO -      Number of samples: 100
+2026-07-27 16:35:58,398 - julearn - INFO -      Number of features: 3
+2026-07-27 16:35:58,398 - julearn - INFO - ====================
+2026-07-27 16:35:58,398 - julearn - INFO -
+2026-07-27 16:35:58,398 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:35:58,398 - julearn - INFO -      Target type: str
+2026-07-27 16:35:58,399 - julearn - INFO -      Class distributions: species
 versicolor    50
 virginica     50
 Name: count, dtype: int64
-2026-06-04 11:00:31,875 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
-2026-06-04 11:00:31,875 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:35:58,399 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
+2026-07-27 16:35:58,400 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:00:31,876 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:35:58,400 - julearn - INFO - Binary classification problem detected.
 </pre></div>
 </div>
 <p>Now we can obtain the feature importance for each estimator (CV fold).</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">to_plot</span></a> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/functions.html#int" title="builtins.int"><span class="n">i_fold</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">estimator</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores</span></a><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]):</span>
-    <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">this_importances</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span></a><span class="p">(</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">to_plot</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i_fold</span><span class="p">,</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]):</span>
+    <span class="n">this_importances</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
         <span class="p">{</span>
-            <span class="s2">"variable"</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"_"</span><span class="p">,</span> <span class="s2">" "</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">],</span>
-            <span class="s2">"importance"</span><span class="p">:</span> <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">estimator</span></a><span class="p">[</span><span class="s2">"rf"</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">,</span>
-            <span class="s2">"fold"</span><span class="p">:</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/functions.html#int" title="builtins.int"><span class="n">i_fold</span></a><span class="p">,</span>
+            <span class="s2">"variable"</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"_"</span><span class="p">,</span> <span class="s2">" "</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">],</span>
+            <span class="s2">"importance"</span><span class="p">:</span> <span class="n">estimator</span><span class="p">[</span><span class="s2">"rf"</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">,</span>
+            <span class="s2">"fold"</span><span class="p">:</span> <span class="n">i_fold</span><span class="p">,</span>
         <span class="p">}</span>
     <span class="p">)</span>
-    <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">to_plot</span><span class="o">.</span><span class="n">append</span></a><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">this_importances</span></a><span class="p">)</span>
+    <span class="n">to_plot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_importances</span><span class="p">)</span>
 
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">to_plot</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-function" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.concat.html#pandas.concat" title="pandas.concat"><span class="n">pd</span><span class="o">.</span><span class="n">concat</span></a><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">to_plot</span></a><span class="p">)</span>
+<span class="n">to_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">to_plot</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Finally, we can plot the variable importances for each fold.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">"importance"</span><span class="p">,</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="o">=</span><span class="s2">"variable"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">to_plot</span></a><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">"importance"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">"variable"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">to_plot</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
     <span class="s2">"Distribution of variable Importances for Random Forest "</span>
     <span class="s2">"Classifier across folds"</span>
@@ -649,7 +650,7 @@ Name: count, dtype: int64
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<img alt="Distribution of variable Importances for Random Forest Classifier across folds" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_inspect_random_forest_002.png" srcset="../../_images/sphx_glr_plot_inspect_random_forest_002.png"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.276 seconds)</p>
+<img alt="Distribution of variable Importances for Random Forest Classifier across folds" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_inspect_random_forest_002.png" srcset="../../_images/sphx_glr_plot_inspect_random_forest_002.png"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.259 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-02-inspection-plot-inspect-random-forest-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b72a553cc1a921289d38c9c7f22a453c/plot_inspect_random_forest.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_inspect_random_forest.ipynb</span></code></a></p>
@@ -727,7 +728,7 @@ Name: count, dtype: int64
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=6cf030bf"></script>
+</div><script src="../../_static/documentation_options.js?v=8af287f3"></script>
 <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

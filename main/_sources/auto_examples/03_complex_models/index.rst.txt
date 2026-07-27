@@ -19,6 +19,23 @@ Examples that show how to build complex models.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This example uses the iris dataset and performs binary classifications using different models. At the end, it compares the performance of the models using different scoring functions and performs a statistical test to assess whether the difference in performance is significant.">
+
+.. only:: html
+
+  .. image:: /auto_examples/03_complex_models/images/thumb/sphx_glr_run_xgboost_early_stopping_thumb.png
+    :alt:
+
+  :doc:`/auto_examples/03_complex_models/run_xgboost_early_stopping`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Simple Model Comparison</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="This example uses the iris dataset and tests a regression model in which the target variable is generated from some features within the cross-validation procedure. We will use the Iris dataset and generate a target variable using PCA on the petal features. Then, we will evaluate if a regression model can predict the generated target from the sepal features">
 
 .. only:: html
@@ -146,6 +163,7 @@ Examples that show how to build complex models.
 .. toctree::
    :hidden:
 
+   /auto_examples/03_complex_models/run_xgboost_early_stopping
    /auto_examples/03_complex_models/run_generate_target
    /auto_examples/03_complex_models/run_apply_to_target
    /auto_examples/03_complex_models/run_hyperparameter_multiple_grids

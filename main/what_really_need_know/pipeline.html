@@ -222,6 +222,7 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../auto_examples/03_complex_models/index.html">8.4. Complex Models</a><input aria-label="Toggle navigation of 8.4. Complex Models" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_examples/03_complex_models/run_xgboost_early_stopping.html">Simple Model Comparison</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../auto_examples/03_complex_models/run_generate_target.html">Target Generation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../auto_examples/03_complex_models/run_apply_to_target.html">Transforming target variable with z-score</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../auto_examples/03_complex_models/run_hyperparameter_multiple_grids.html">Tuning Multiple Hyperparameters Grids</a></li>
@@ -511,43 +512,43 @@ compatible learning algorithm. However, <code class="docutils literal notranslat
 <span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:01:00,553 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:01:00,553 - julearn - INFO - Using dataframe as input
-2026-06-04 11:01:00,553 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-2026-06-04 11:01:00,553 - julearn - INFO -      Target: species
-2026-06-04 11:01:00,554 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-2026-06-04 11:01:00,554 - julearn - INFO -      X_types:{'continuous': ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']}
-2026-06-04 11:01:00,555 - julearn - INFO - ====================
-2026-06-04 11:01:00,555 - julearn - INFO -
-2026-06-04 11:01:00,555 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,555 - julearn - INFO - Step added
-2026-06-04 11:01:00,555 - julearn - INFO - = Model Parameters =
-2026-06-04 11:01:00,555 - julearn - INFO - ====================
-2026-06-04 11:01:00,556 - julearn - INFO -
-2026-06-04 11:01:00,556 - julearn - INFO - = Data Information =
-2026-06-04 11:01:00,556 - julearn - INFO -      Problem type: classification
-2026-06-04 11:01:00,556 - julearn - INFO -      Number of samples: 150
-2026-06-04 11:01:00,556 - julearn - INFO -      Number of features: 4
-2026-06-04 11:01:00,556 - julearn - INFO - ====================
-2026-06-04 11:01:00,556 - julearn - INFO -
-2026-06-04 11:01:00,556 - julearn - INFO -      Number of classes: 3
-2026-06-04 11:01:00,556 - julearn - INFO -      Target type: str
-2026-06-04 11:01:00,557 - julearn - INFO -      Class distributions: species
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:26,589 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:36:26,589 - julearn - INFO - Using dataframe as input
+2026-07-27 16:36:26,589 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+2026-07-27 16:36:26,590 - julearn - INFO -      Target: species
+2026-07-27 16:36:26,590 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+2026-07-27 16:36:26,590 - julearn - INFO -      X_types:{'continuous': ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']}
+2026-07-27 16:36:26,591 - julearn - INFO - ====================
+2026-07-27 16:36:26,591 - julearn - INFO -
+2026-07-27 16:36:26,591 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,591 - julearn - INFO - Step added
+2026-07-27 16:36:26,592 - julearn - INFO - = Model Parameters =
+2026-07-27 16:36:26,592 - julearn - INFO - ====================
+2026-07-27 16:36:26,592 - julearn - INFO -
+2026-07-27 16:36:26,592 - julearn - INFO - = Data Information =
+2026-07-27 16:36:26,592 - julearn - INFO -      Problem type: classification
+2026-07-27 16:36:26,592 - julearn - INFO -      Number of samples: 150
+2026-07-27 16:36:26,592 - julearn - INFO -      Number of features: 4
+2026-07-27 16:36:26,592 - julearn - INFO - ====================
+2026-07-27 16:36:26,592 - julearn - INFO -
+2026-07-27 16:36:26,592 - julearn - INFO -      Number of classes: 3
+2026-07-27 16:36:26,592 - julearn - INFO -      Target type: str
+2026-07-27 16:36:26,593 - julearn - INFO -      Class distributions: species
 setosa        50
 versicolor    50
 virginica     50
 Name: count, dtype: int64
-2026-06-04 11:01:00,557 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
-2026-06-04 11:01:00,558 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:36:26,594 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
+2026-07-27 16:36:26,594 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:01:00,558 - julearn - INFO - Multi-class classification problem detected #classes = 3.
+2026-07-27 16:36:26,594 - julearn - INFO - Multi-class classification problem detected #classes = 3.
    fit_time  score_time  ...  fold                          cv_mdsum
-0  0.002455    0.001446  ...     0  b10eef89b4192178d482d7a1587a248a
-1  0.002193    0.001415  ...     1  b10eef89b4192178d482d7a1587a248a
-2  0.002140    0.001399  ...     2  b10eef89b4192178d482d7a1587a248a
-3  0.002148    0.001409  ...     3  b10eef89b4192178d482d7a1587a248a
-4  0.002162    0.001406  ...     4  b10eef89b4192178d482d7a1587a248a
+0  0.002474    0.001451  ...     0  b10eef89b4192178d482d7a1587a248a
+1  0.002158    0.001383  ...     1  b10eef89b4192178d482d7a1587a248a
+2  0.002092    0.001361  ...     2  b10eef89b4192178d482d7a1587a248a
+3  0.002089    0.001387  ...     3  b10eef89b4192178d482d7a1587a248a
+4  0.002094    0.001398  ...     4  b10eef89b4192178d482d7a1587a248a
 
 [5 rows x 8 columns]
 </pre></div>
@@ -597,45 +598,45 @@ takes care of doing the respective transformations in a cv-consistent manner.</p
 <span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:01:00,585 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:01:00,585 - julearn - INFO - Using dataframe as input
-2026-06-04 11:01:00,585 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-2026-06-04 11:01:00,585 - julearn - INFO -      Target: species
-2026-06-04 11:01:00,585 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-2026-06-04 11:01:00,585 - julearn - INFO -      X_types:{'continuous': ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']}
-2026-06-04 11:01:00,586 - julearn - INFO - ====================
-2026-06-04 11:01:00,586 - julearn - INFO -
-2026-06-04 11:01:00,586 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,586 - julearn - INFO - Step added
-2026-06-04 11:01:00,586 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,586 - julearn - INFO - Step added
-2026-06-04 11:01:00,587 - julearn - INFO - = Model Parameters =
-2026-06-04 11:01:00,587 - julearn - INFO - ====================
-2026-06-04 11:01:00,587 - julearn - INFO -
-2026-06-04 11:01:00,587 - julearn - INFO - = Data Information =
-2026-06-04 11:01:00,587 - julearn - INFO -      Problem type: classification
-2026-06-04 11:01:00,587 - julearn - INFO -      Number of samples: 150
-2026-06-04 11:01:00,587 - julearn - INFO -      Number of features: 4
-2026-06-04 11:01:00,587 - julearn - INFO - ====================
-2026-06-04 11:01:00,587 - julearn - INFO -
-2026-06-04 11:01:00,587 - julearn - INFO -      Number of classes: 3
-2026-06-04 11:01:00,588 - julearn - INFO -      Target type: str
-2026-06-04 11:01:00,588 - julearn - INFO -      Class distributions: species
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:26,620 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:36:26,620 - julearn - INFO - Using dataframe as input
+2026-07-27 16:36:26,620 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+2026-07-27 16:36:26,620 - julearn - INFO -      Target: species
+2026-07-27 16:36:26,620 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+2026-07-27 16:36:26,620 - julearn - INFO -      X_types:{'continuous': ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']}
+2026-07-27 16:36:26,621 - julearn - INFO - ====================
+2026-07-27 16:36:26,621 - julearn - INFO -
+2026-07-27 16:36:26,621 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,621 - julearn - INFO - Step added
+2026-07-27 16:36:26,621 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,621 - julearn - INFO - Step added
+2026-07-27 16:36:26,622 - julearn - INFO - = Model Parameters =
+2026-07-27 16:36:26,622 - julearn - INFO - ====================
+2026-07-27 16:36:26,622 - julearn - INFO -
+2026-07-27 16:36:26,622 - julearn - INFO - = Data Information =
+2026-07-27 16:36:26,622 - julearn - INFO -      Problem type: classification
+2026-07-27 16:36:26,622 - julearn - INFO -      Number of samples: 150
+2026-07-27 16:36:26,622 - julearn - INFO -      Number of features: 4
+2026-07-27 16:36:26,622 - julearn - INFO - ====================
+2026-07-27 16:36:26,622 - julearn - INFO -
+2026-07-27 16:36:26,623 - julearn - INFO -      Number of classes: 3
+2026-07-27 16:36:26,623 - julearn - INFO -      Target type: str
+2026-07-27 16:36:26,623 - julearn - INFO -      Class distributions: species
 setosa        50
 versicolor    50
 virginica     50
 Name: count, dtype: int64
-2026-06-04 11:01:00,588 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
-2026-06-04 11:01:00,589 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:36:26,624 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
+2026-07-27 16:36:26,624 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:01:00,589 - julearn - INFO - Multi-class classification problem detected #classes = 3.
+2026-07-27 16:36:26,624 - julearn - INFO - Multi-class classification problem detected #classes = 3.
    fit_time  score_time  ...  fold                          cv_mdsum
-0  0.003789    0.002034  ...     0  b10eef89b4192178d482d7a1587a248a
-1  0.003461    0.001990  ...     1  b10eef89b4192178d482d7a1587a248a
-2  0.003403    0.002009  ...     2  b10eef89b4192178d482d7a1587a248a
-3  0.003462    0.002065  ...     3  b10eef89b4192178d482d7a1587a248a
-4  0.003437    0.001986  ...     4  b10eef89b4192178d482d7a1587a248a
+0  0.003574    0.001956  ...     0  b10eef89b4192178d482d7a1587a248a
+1  0.003414    0.001960  ...     1  b10eef89b4192178d482d7a1587a248a
+2  0.003356    0.001957  ...     2  b10eef89b4192178d482d7a1587a248a
+3  0.003360    0.001957  ...     3  b10eef89b4192178d482d7a1587a248a
+4  0.003386    0.001958  ...     4  b10eef89b4192178d482d7a1587a248a
 
 [5 rows x 8 columns]
 </pre></div>
@@ -676,47 +677,47 @@ another preprocessing step as follows:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:01:00,625 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:01:00,625 - julearn - INFO - Using dataframe as input
-2026-06-04 11:01:00,625 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-2026-06-04 11:01:00,625 - julearn - INFO -      Target: species
-2026-06-04 11:01:00,625 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-2026-06-04 11:01:00,625 - julearn - INFO -      X_types:{'continuous': ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']}
-2026-06-04 11:01:00,626 - julearn - INFO - ====================
-2026-06-04 11:01:00,626 - julearn - INFO -
-2026-06-04 11:01:00,626 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,626 - julearn - INFO - Step added
-2026-06-04 11:01:00,626 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,626 - julearn - INFO - Step added
-2026-06-04 11:01:00,627 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,627 - julearn - INFO - Step added
-2026-06-04 11:01:00,627 - julearn - INFO - = Model Parameters =
-2026-06-04 11:01:00,627 - julearn - INFO - ====================
-2026-06-04 11:01:00,627 - julearn - INFO -
-2026-06-04 11:01:00,627 - julearn - INFO - = Data Information =
-2026-06-04 11:01:00,627 - julearn - INFO -      Problem type: classification
-2026-06-04 11:01:00,627 - julearn - INFO -      Number of samples: 150
-2026-06-04 11:01:00,627 - julearn - INFO -      Number of features: 4
-2026-06-04 11:01:00,627 - julearn - INFO - ====================
-2026-06-04 11:01:00,627 - julearn - INFO -
-2026-06-04 11:01:00,627 - julearn - INFO -      Number of classes: 3
-2026-06-04 11:01:00,627 - julearn - INFO -      Target type: str
-2026-06-04 11:01:00,628 - julearn - INFO -      Class distributions: species
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:26,659 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:36:26,659 - julearn - INFO - Using dataframe as input
+2026-07-27 16:36:26,659 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+2026-07-27 16:36:26,659 - julearn - INFO -      Target: species
+2026-07-27 16:36:26,659 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+2026-07-27 16:36:26,659 - julearn - INFO -      X_types:{'continuous': ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']}
+2026-07-27 16:36:26,660 - julearn - INFO - ====================
+2026-07-27 16:36:26,660 - julearn - INFO -
+2026-07-27 16:36:26,660 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,660 - julearn - INFO - Step added
+2026-07-27 16:36:26,660 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,661 - julearn - INFO - Step added
+2026-07-27 16:36:26,661 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,661 - julearn - INFO - Step added
+2026-07-27 16:36:26,661 - julearn - INFO - = Model Parameters =
+2026-07-27 16:36:26,661 - julearn - INFO - ====================
+2026-07-27 16:36:26,661 - julearn - INFO -
+2026-07-27 16:36:26,661 - julearn - INFO - = Data Information =
+2026-07-27 16:36:26,661 - julearn - INFO -      Problem type: classification
+2026-07-27 16:36:26,661 - julearn - INFO -      Number of samples: 150
+2026-07-27 16:36:26,662 - julearn - INFO -      Number of features: 4
+2026-07-27 16:36:26,662 - julearn - INFO - ====================
+2026-07-27 16:36:26,662 - julearn - INFO -
+2026-07-27 16:36:26,662 - julearn - INFO -      Number of classes: 3
+2026-07-27 16:36:26,662 - julearn - INFO -      Target type: str
+2026-07-27 16:36:26,662 - julearn - INFO -      Class distributions: species
 setosa        50
 versicolor    50
 virginica     50
 Name: count, dtype: int64
-2026-06-04 11:01:00,628 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
-2026-06-04 11:01:00,629 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:36:26,663 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
+2026-07-27 16:36:26,663 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:01:00,629 - julearn - INFO - Multi-class classification problem detected #classes = 3.
+2026-07-27 16:36:26,664 - julearn - INFO - Multi-class classification problem detected #classes = 3.
    fit_time  score_time  ...  fold                          cv_mdsum
-0  0.004591    0.002605  ...     0  b10eef89b4192178d482d7a1587a248a
-1  0.004325    0.002556  ...     1  b10eef89b4192178d482d7a1587a248a
-2  0.004259    0.002509  ...     2  b10eef89b4192178d482d7a1587a248a
-3  0.004194    0.002526  ...     3  b10eef89b4192178d482d7a1587a248a
-4  0.004247    0.002504  ...     4  b10eef89b4192178d482d7a1587a248a
+0  0.004401    0.002523  ...     0  b10eef89b4192178d482d7a1587a248a
+1  0.004179    0.002442  ...     1  b10eef89b4192178d482d7a1587a248a
+2  0.004144    0.002458  ...     2  b10eef89b4192178d482d7a1587a248a
+3  0.004153    0.002419  ...     3  b10eef89b4192178d482d7a1587a248a
+4  0.004225    0.002451  ...     4  b10eef89b4192178d482d7a1587a248a
 
 [5 rows x 8 columns]
 </pre></div>
@@ -758,12 +759,12 @@ of the step as indicated in <a class="reference internal" href="../available_pip
 <span class="nb">print</span><span class="p">(</span><span class="n">creator</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:01:00,672 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,672 - julearn - INFO - Step added
-2026-06-04 11:01:00,672 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,672 - julearn - INFO - Step added
-2026-06-04 11:01:00,672 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,673 - julearn - INFO - Step added
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:26,705 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,706 - julearn - INFO - Step added
+2026-07-27 16:36:26,706 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,706 - julearn - INFO - Step added
+2026-07-27 16:36:26,706 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,706 - julearn - INFO - Step added
 PipelineCreator:
   Step 0: zscore
     estimator:     StandardScaler()
@@ -796,41 +797,41 @@ pipeline specification step (such as <code class="docutils literal notranslate">
 <span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:01:00,674 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:01:00,674 - julearn - INFO - Using dataframe as input
-2026-06-04 11:01:00,674 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-2026-06-04 11:01:00,674 - julearn - INFO -      Target: species
-2026-06-04 11:01:00,674 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-2026-06-04 11:01:00,674 - julearn - INFO -      X_types:{'continuous': ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']}
-2026-06-04 11:01:00,675 - julearn - INFO - ====================
-2026-06-04 11:01:00,675 - julearn - INFO -
-2026-06-04 11:01:00,676 - julearn - INFO - = Model Parameters =
-2026-06-04 11:01:00,676 - julearn - INFO - ====================
-2026-06-04 11:01:00,676 - julearn - INFO -
-2026-06-04 11:01:00,676 - julearn - INFO - = Data Information =
-2026-06-04 11:01:00,676 - julearn - INFO -      Problem type: classification
-2026-06-04 11:01:00,676 - julearn - INFO -      Number of samples: 150
-2026-06-04 11:01:00,676 - julearn - INFO -      Number of features: 4
-2026-06-04 11:01:00,676 - julearn - INFO - ====================
-2026-06-04 11:01:00,676 - julearn - INFO -
-2026-06-04 11:01:00,676 - julearn - INFO -      Number of classes: 3
-2026-06-04 11:01:00,676 - julearn - INFO -      Target type: str
-2026-06-04 11:01:00,677 - julearn - INFO -      Class distributions: species
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:26,707 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:36:26,707 - julearn - INFO - Using dataframe as input
+2026-07-27 16:36:26,707 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+2026-07-27 16:36:26,708 - julearn - INFO -      Target: species
+2026-07-27 16:36:26,708 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+2026-07-27 16:36:26,708 - julearn - INFO -      X_types:{'continuous': ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']}
+2026-07-27 16:36:26,708 - julearn - INFO - ====================
+2026-07-27 16:36:26,709 - julearn - INFO -
+2026-07-27 16:36:26,709 - julearn - INFO - = Model Parameters =
+2026-07-27 16:36:26,709 - julearn - INFO - ====================
+2026-07-27 16:36:26,709 - julearn - INFO -
+2026-07-27 16:36:26,709 - julearn - INFO - = Data Information =
+2026-07-27 16:36:26,709 - julearn - INFO -      Problem type: classification
+2026-07-27 16:36:26,709 - julearn - INFO -      Number of samples: 150
+2026-07-27 16:36:26,709 - julearn - INFO -      Number of features: 4
+2026-07-27 16:36:26,709 - julearn - INFO - ====================
+2026-07-27 16:36:26,710 - julearn - INFO -
+2026-07-27 16:36:26,710 - julearn - INFO -      Number of classes: 3
+2026-07-27 16:36:26,710 - julearn - INFO -      Target type: str
+2026-07-27 16:36:26,710 - julearn - INFO -      Class distributions: species
 setosa        50
 versicolor    50
 virginica     50
 Name: count, dtype: int64
-2026-06-04 11:01:00,678 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
-2026-06-04 11:01:00,678 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:36:26,711 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
+2026-07-27 16:36:26,711 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:01:00,678 - julearn - INFO - Multi-class classification problem detected #classes = 3.
+2026-07-27 16:36:26,711 - julearn - INFO - Multi-class classification problem detected #classes = 3.
    fit_time  score_time  ...  fold                          cv_mdsum
-0  0.004389    0.002549  ...     0  b10eef89b4192178d482d7a1587a248a
-1  0.004230    0.002525  ...     1  b10eef89b4192178d482d7a1587a248a
-2  0.004261    0.002541  ...     2  b10eef89b4192178d482d7a1587a248a
-3  0.004234    0.002520  ...     3  b10eef89b4192178d482d7a1587a248a
-4  0.004286    0.002546  ...     4  b10eef89b4192178d482d7a1587a248a
+0  0.004310    0.002523  ...     0  b10eef89b4192178d482d7a1587a248a
+1  0.004174    0.002474  ...     1  b10eef89b4192178d482d7a1587a248a
+2  0.004149    0.002478  ...     2  b10eef89b4192178d482d7a1587a248a
+3  0.004153    0.002499  ...     3  b10eef89b4192178d482d7a1587a248a
+4  0.004169    0.002543  ...     4  b10eef89b4192178d482d7a1587a248a
 
 [5 rows x 8 columns]
 </pre></div>
@@ -877,14 +878,14 @@ This is how the creator would look like:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">creator</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:01:00,721 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,721 - julearn - INFO - Setting hyperparameter with_mean = True
-2026-06-04 11:01:00,721 - julearn - INFO - Step added
-2026-06-04 11:01:00,721 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,721 - julearn - INFO - Setting hyperparameter n_components = 0.2
-2026-06-04 11:01:00,721 - julearn - INFO - Step added
-2026-06-04 11:01:00,722 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,722 - julearn - INFO - Step added
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:26,753 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,753 - julearn - INFO - Setting hyperparameter with_mean = True
+2026-07-27 16:36:26,753 - julearn - INFO - Step added
+2026-07-27 16:36:26,753 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,754 - julearn - INFO - Setting hyperparameter n_components = 0.2
+2026-07-27 16:36:26,754 - julearn - INFO - Step added
+2026-07-27 16:36:26,754 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,754 - julearn - INFO - Step added
 PipelineCreator:
   Step 0: zscore
     estimator:     StandardScaler()
@@ -920,16 +921,16 @@ could for example specify the <code class="docutils literal notranslate"><span c
 <span class="nb">print</span><span class="p">(</span><span class="n">creator</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:01:00,723 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,723 - julearn - INFO - Setting hyperparameter with_mean = True
-2026-06-04 11:01:00,723 - julearn - INFO - Step added
-2026-06-04 11:01:00,723 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,723 - julearn - INFO - Setting hyperparameter n_components = 0.2
-2026-06-04 11:01:00,724 - julearn - INFO - Step added
-2026-06-04 11:01:00,724 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,724 - julearn - INFO - Setting hyperparameter C = 0.9
-2026-06-04 11:01:00,724 - julearn - INFO - Setting hyperparameter kernel = linear
-2026-06-04 11:01:00,724 - julearn - INFO - Step added
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:26,755 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,755 - julearn - INFO - Setting hyperparameter with_mean = True
+2026-07-27 16:36:26,755 - julearn - INFO - Step added
+2026-07-27 16:36:26,756 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,756 - julearn - INFO - Setting hyperparameter n_components = 0.2
+2026-07-27 16:36:26,756 - julearn - INFO - Step added
+2026-07-27 16:36:26,756 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,756 - julearn - INFO - Setting hyperparameter C = 0.9
+2026-07-27 16:36:26,756 - julearn - INFO - Setting hyperparameter kernel = linear
+2026-07-27 16:36:26,756 - julearn - INFO - Step added
 PipelineCreator:
   Step 0: zscore
     estimator:     StandardScaler()
@@ -980,17 +981,17 @@ to specify this as well, indicating that we want to apply it to both
 <span class="nb">print</span><span class="p">(</span><span class="n">creator</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:01:00,726 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'petal', 'sepal'}; pattern=(?:__:type:__petal|__:type:__sepal)&gt;
-2026-06-04 11:01:00,726 - julearn - INFO - Setting hyperparameter with_mean = True
-2026-06-04 11:01:00,726 - julearn - INFO - Step added
-2026-06-04 11:01:00,726 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'petal'}; pattern=(?:__:type:__petal)&gt;
-2026-06-04 11:01:00,726 - julearn - INFO - Setting hyperparameter n_components = 1
-2026-06-04 11:01:00,726 - julearn - INFO - Step added
-2026-06-04 11:01:00,726 - julearn - INFO - Adding step pca_1 that applies to ColumnTypes&lt;types={'sepal'}; pattern=(?:__:type:__sepal)&gt;
-2026-06-04 11:01:00,726 - julearn - INFO - Setting hyperparameter n_components = 1
-2026-06-04 11:01:00,726 - julearn - INFO - Step added
-2026-06-04 11:01:00,727 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:01:00,727 - julearn - INFO - Step added
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:26,758 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'petal', 'sepal'}; pattern=(?:__:type:__petal|__:type:__sepal)&gt;
+2026-07-27 16:36:26,758 - julearn - INFO - Setting hyperparameter with_mean = True
+2026-07-27 16:36:26,758 - julearn - INFO - Step added
+2026-07-27 16:36:26,758 - julearn - INFO - Adding step pca that applies to ColumnTypes&lt;types={'petal'}; pattern=(?:__:type:__petal)&gt;
+2026-07-27 16:36:26,758 - julearn - INFO - Setting hyperparameter n_components = 1
+2026-07-27 16:36:26,758 - julearn - INFO - Step added
+2026-07-27 16:36:26,758 - julearn - INFO - Adding step pca_1 that applies to ColumnTypes&lt;types={'sepal'}; pattern=(?:__:type:__sepal)&gt;
+2026-07-27 16:36:26,758 - julearn - INFO - Setting hyperparameter n_components = 1
+2026-07-27 16:36:26,759 - julearn - INFO - Step added
+2026-07-27 16:36:26,759 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:26,759 - julearn - INFO - Step added
 PipelineCreator:
   Step 0: zscore
     estimator:     StandardScaler()
@@ -1030,41 +1031,41 @@ the default hyperparameters.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:01:00,728 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:01:00,728 - julearn - INFO - Using dataframe as input
-2026-06-04 11:01:00,728 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-2026-06-04 11:01:00,728 - julearn - INFO -      Target: species
-2026-06-04 11:01:00,729 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-2026-06-04 11:01:00,729 - julearn - INFO -      X_types:{'sepal': ['sepal_length', 'sepal_width'], 'petal': ['petal_length', 'petal_width']}
-2026-06-04 11:01:00,729 - julearn - INFO - ====================
-2026-06-04 11:01:00,730 - julearn - INFO -
-2026-06-04 11:01:00,730 - julearn - INFO - = Model Parameters =
-2026-06-04 11:01:00,730 - julearn - INFO - ====================
-2026-06-04 11:01:00,730 - julearn - INFO -
-2026-06-04 11:01:00,730 - julearn - INFO - = Data Information =
-2026-06-04 11:01:00,730 - julearn - INFO -      Problem type: classification
-2026-06-04 11:01:00,730 - julearn - INFO -      Number of samples: 150
-2026-06-04 11:01:00,730 - julearn - INFO -      Number of features: 4
-2026-06-04 11:01:00,730 - julearn - INFO - ====================
-2026-06-04 11:01:00,731 - julearn - INFO -
-2026-06-04 11:01:00,731 - julearn - INFO -      Number of classes: 3
-2026-06-04 11:01:00,731 - julearn - INFO -      Target type: str
-2026-06-04 11:01:00,731 - julearn - INFO -      Class distributions: species
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:26,760 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:36:26,760 - julearn - INFO - Using dataframe as input
+2026-07-27 16:36:26,760 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+2026-07-27 16:36:26,761 - julearn - INFO -      Target: species
+2026-07-27 16:36:26,761 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+2026-07-27 16:36:26,761 - julearn - INFO -      X_types:{'sepal': ['sepal_length', 'sepal_width'], 'petal': ['petal_length', 'petal_width']}
+2026-07-27 16:36:26,761 - julearn - INFO - ====================
+2026-07-27 16:36:26,761 - julearn - INFO -
+2026-07-27 16:36:26,762 - julearn - INFO - = Model Parameters =
+2026-07-27 16:36:26,762 - julearn - INFO - ====================
+2026-07-27 16:36:26,762 - julearn - INFO -
+2026-07-27 16:36:26,762 - julearn - INFO - = Data Information =
+2026-07-27 16:36:26,762 - julearn - INFO -      Problem type: classification
+2026-07-27 16:36:26,762 - julearn - INFO -      Number of samples: 150
+2026-07-27 16:36:26,762 - julearn - INFO -      Number of features: 4
+2026-07-27 16:36:26,762 - julearn - INFO - ====================
+2026-07-27 16:36:26,762 - julearn - INFO -
+2026-07-27 16:36:26,763 - julearn - INFO -      Number of classes: 3
+2026-07-27 16:36:26,763 - julearn - INFO -      Target type: str
+2026-07-27 16:36:26,763 - julearn - INFO -      Class distributions: species
 setosa        50
 versicolor    50
 virginica     50
 Name: count, dtype: int64
-2026-06-04 11:01:00,732 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
-2026-06-04 11:01:00,732 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:36:26,764 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
+2026-07-27 16:36:26,764 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:01:00,732 - julearn - INFO - Multi-class classification problem detected #classes = 3.
+2026-07-27 16:36:26,764 - julearn - INFO - Multi-class classification problem detected #classes = 3.
    fit_time  score_time  ...  fold                          cv_mdsum
-0  0.012155    0.005745  ...     0  b10eef89b4192178d482d7a1587a248a
-1  0.011801    0.005668  ...     1  b10eef89b4192178d482d7a1587a248a
-2  0.011837    0.005647  ...     2  b10eef89b4192178d482d7a1587a248a
-3  0.011878    0.005671  ...     3  b10eef89b4192178d482d7a1587a248a
-4  0.011775    0.005647  ...     4  b10eef89b4192178d482d7a1587a248a
+0  0.011790    0.005607  ...     0  b10eef89b4192178d482d7a1587a248a
+1  0.011642    0.005556  ...     1  b10eef89b4192178d482d7a1587a248a
+2  0.011570    0.005565  ...     2  b10eef89b4192178d482d7a1587a248a
+3  0.011728    0.005581  ...     3  b10eef89b4192178d482d7a1587a248a
+4  0.011576    0.005478  ...     4  b10eef89b4192178d482d7a1587a248a
 
 [5 rows x 8 columns]
 </pre></div>
@@ -1087,7 +1088,7 @@ theory. 1992 Jul; 144-152.</p>
 </aside>
 </aside>
 </aside>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.281 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.275 seconds)</p>
 </section>
 </section>
 </article>
@@ -1157,7 +1158,7 @@ theory. 1992 Jul; 144-152.</p>
 </div>
 </aside>
 </div>
-</div><script src="../_static/documentation_options.js?v=6cf030bf"></script>
+</div><script src="../_static/documentation_options.js?v=8af287f3"></script>
 <script src="../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -222,6 +222,7 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../03_complex_models/index.html">8.4. Complex Models</a><input aria-label="Toggle navigation of 8.4. Complex Models" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_xgboost_early_stopping.html">Simple Model Comparison</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_generate_target.html">Target Generation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_apply_to_target.html">Transforming target variable with z-score</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_hyperparameter_multiple_grids.html">Tuning Multiple Hyperparameters Grids</a></li>
@@ -488,11 +489,11 @@ ready to do some machine-learning. However, this is error-prone.</p>
 <p>Fortunately, <a class="reference external" href="https://pandas.pydata.org">pandas</a> provides several tools to deal with this task.</p>
 <p>This example is a collection of some of these useful methods.</p>
 <p>Let’s start with the <code class="docutils literal notranslate"><span class="pre">fmri</span></code> dataset.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_fmri</span></a> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"fmri"</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_fmri</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"fmri"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Let’s see what this dataset has.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head" title="pandas.DataFrame.head"><span class="n">df_fmri</span><span class="o">.</span><span class="n">head</span></a><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_fmri</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -574,7 +575,7 @@ must be a columns. In order to use the signals from different regions as
 features, we need to convert this dataframe from the long format to the wide
 format.</p>
 <p>We will use the <code class="docutils literal notranslate"><span class="pre">pivot</span></code> method.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_fmri</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.pivot.html#pandas.DataFrame.pivot" title="pandas.DataFrame.pivot"><span class="n">df_fmri</span><span class="o">.</span><span class="n">pivot</span></a><span class="p">(</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_fmri</span> <span class="o">=</span> <span class="n">df_fmri</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span>
     <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">"subject"</span><span class="p">,</span> <span class="s2">"timepoint"</span><span class="p">,</span> <span class="s2">"event"</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="s2">"region"</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s2">"signal"</span>
 <span class="p">)</span>
 </pre></div>
@@ -588,7 +589,7 @@ index.</p>
 duplicated. If each subject has more than one timepoint, and each timepoint
 has more than one event, then these 3 elements are needed as the index.</p>
 <p>Let’s see what we have here:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head" title="pandas.DataFrame.head"><span class="n">df_fmri</span><span class="o">.</span><span class="n">head</span></a><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_fmri</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -661,8 +662,8 @@ has more than one event, then these 3 elements are needed as the index.</p>
 <br/><p>Now this is in the format we want. However, in order to access the index
 as columns <code class="docutils literal notranslate"><span class="pre">df_fmri["subject"]</span></code> we need to reset the index.</p>
 <p>Check the subtle but important difference:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_fmri</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.reset_index.html#pandas.DataFrame.reset_index" title="pandas.DataFrame.reset_index"><span class="n">df_fmri</span><span class="o">.</span><span class="n">reset_index</span></a><span class="p">()</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head" title="pandas.DataFrame.head"><span class="n">df_fmri</span><span class="o">.</span><span class="n">head</span></a><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_fmri</span> <span class="o">=</span> <span class="n">df_fmri</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_fmri</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -743,13 +744,13 @@ as columns <code class="docutils literal notranslate"><span class="pre">df_fmri[
 the case that we have some important information in another file. For example,
 the subjects’ age and the place where they were scanned.</p>
 <p>For the purpose of the example, we’ll create the dataframe here.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict"><span class="n">metadata</span></a> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">"subject"</span><span class="p">:</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"s</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">)],</span>
     <span class="s2">"age"</span><span class="p">:</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span>
     <span class="s2">"scanner"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"a"</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"b"</span><span class="p">]</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span>
 <span class="p">}</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_meta</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span></a><span class="p">(</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict"><span class="n">metadata</span></a><span class="p">)</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_meta</span></a>
+<span class="n">df_meta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+<span class="n">df_meta</span>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -870,10 +871,10 @@ the subjects’ age and the place where they were scanned.</p>
 matching elements by the <em>index</em>.</p>
 <p>In this case, the matching element (or index) will be the column <code class="docutils literal notranslate"><span class="pre">subject</span></code>.
 We need to set the index in each dataframe before join.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_fmri</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.set_index.html#pandas.DataFrame.set_index" title="pandas.DataFrame.set_index"><span class="n">df_fmri</span><span class="o">.</span><span class="n">set_index</span></a><span class="p">(</span><span class="s2">"subject"</span><span class="p">)</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_meta</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.set_index.html#pandas.DataFrame.set_index" title="pandas.DataFrame.set_index"><span class="n">df_meta</span><span class="o">.</span><span class="n">set_index</span></a><span class="p">(</span><span class="s2">"subject"</span><span class="p">)</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_fmri</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.join.html#pandas.DataFrame.join" title="pandas.DataFrame.join"><span class="n">df_fmri</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_meta</span></a><span class="p">)</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_fmri</span></a>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_fmri</span> <span class="o">=</span> <span class="n">df_fmri</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"subject"</span><span class="p">)</span>
+<span class="n">df_meta</span> <span class="o">=</span> <span class="n">df_meta</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"subject"</span><span class="p">)</span>
+<span class="n">df_fmri</span> <span class="o">=</span> <span class="n">df_fmri</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df_meta</span><span class="p">)</span>
+<span class="n">df_fmri</span>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -1019,7 +1020,7 @@ We need to set the index in each dataframe before join.</p>
 </div>
 <br/>
 <br/><p>Finally, let’s reset the index and have it ready for <code class="docutils literal notranslate"><span class="pre">julearn</span></code>.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_fmri</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.reset_index.html#pandas.DataFrame.reset_index" title="pandas.DataFrame.reset_index"><span class="n">df_fmri</span><span class="o">.</span><span class="n">reset_index</span></a><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_fmri</span> <span class="o">=</span> <span class="n">df_fmri</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Now we can use, for example, <em>age</em> and <em>scanner</em> as confounds.</p>
@@ -1030,12 +1031,12 @@ as features the frontal and parietal value during each event. For this
 purpose, we need to convert the event values into columns. There are two
 events: <em>cue</em> and <em>stim</em>. So this will result in 4 columns.</p>
 <p>We will still use the pivot, but in this case, we will have two values:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_fmri</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.pivot.html#pandas.DataFrame.pivot" title="pandas.DataFrame.pivot"><span class="n">df_fmri</span><span class="o">.</span><span class="n">pivot</span></a><span class="p">(</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_fmri</span> <span class="o">=</span> <span class="n">df_fmri</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span>
     <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">"subject"</span><span class="p">,</span> <span class="s2">"timepoint"</span><span class="p">,</span> <span class="s2">"age"</span><span class="p">,</span> <span class="s2">"scanner"</span><span class="p">],</span>
     <span class="n">columns</span><span class="o">=</span><span class="s2">"event"</span><span class="p">,</span>
     <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">"frontal"</span><span class="p">,</span> <span class="s2">"parietal"</span><span class="p">],</span>
 <span class="p">)</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_fmri</span></a>
+<span class="n">df_fmri</span>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -1200,7 +1201,7 @@ events: <em>cue</em> and <em>stim</em>. So this will result in 4 columns.</p>
 <br/><p>Since the column names are combinations of the values in the <em>event</em> column
 and the previous <em>frontal</em> and <em>parietal</em> columns, it is now a multi-level
 column name.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.Index.html#pandas.Index" title="pandas.Index"><span class="n">df_fmri</span><span class="o">.</span><span class="n">columns</span></a>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_fmri</span><span class="o">.</span><span class="n">columns</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>MultiIndex([( 'frontal',  'cue'),
@@ -1211,8 +1212,8 @@ column name.</p>
 </pre></div>
 </div>
 <p>The following trick will join the different levels using an underscore (<em>_</em>)</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.Index.html#pandas.Index" title="pandas.Index"><span class="n">df_fmri</span><span class="o">.</span><span class="n">columns</span></a> <span class="o">=</span> <span class="p">[</span><span class="s2">"_"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.Index.html#pandas.Index" title="pandas.Index"><span class="n">df_fmri</span><span class="o">.</span><span class="n">columns</span></a><span class="p">]</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_fmri</span></a>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_fmri</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"_"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df_fmri</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">df_fmri</span>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -1363,10 +1364,10 @@ column name.</p>
 </div>
 <br/>
 <br/><p>We have finally the information we want. We can now reset the index.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_fmri</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.reset_index.html#pandas.DataFrame.reset_index" title="pandas.DataFrame.reset_index"><span class="n">df_fmri</span><span class="o">.</span><span class="n">reset_index</span></a><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_fmri</span> <span class="o">=</span> <span class="n">df_fmri</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.222 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.318 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-00-starting-run-combine-pandas-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/877ac2e363ae97702387f111c911090b/run_combine_pandas.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">run_combine_pandas.ipynb</span></code></a></p>
@@ -1448,7 +1449,7 @@ column name.</p>
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=6cf030bf"></script>
+</div><script src="../../_static/documentation_options.js?v=8af287f3"></script>
 <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

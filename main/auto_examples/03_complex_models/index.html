@@ -4,7 +4,7 @@
 <head><meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="light dark" name="color-scheme"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
-<link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="run_generate_target.html" rel="next" title="Target Generation"/><link href="../02_inspection/plot_preprocess.html" rel="prev" title="Preprocessing with variance threshold, zscore and PCA"/>
+<link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="run_xgboost_early_stopping.html" rel="next" title="Simple Model Comparison"/><link href="../02_inspection/plot_preprocess.html" rel="prev" title="Preprocessing with variance threshold, zscore and PCA"/>
 <link as="image" href="../../_static/julearn_logo_it.png" rel="prefetch"/>
 <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
 <title>8.4. Complex Models - julearn documentation</title>
@@ -222,6 +222,7 @@
 </ul>
 </li>
 <li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#">8.4. Complex Models</a><input aria-label="Toggle navigation of 8.4. Complex Models" checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="run_xgboost_early_stopping.html">Simple Model Comparison</a></li>
 <li class="toctree-l3"><a class="reference internal" href="run_generate_target.html">Target Generation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="run_apply_to_target.html">Transforming target variable with z-score</a></li>
 <li class="toctree-l3"><a class="reference internal" href="run_hyperparameter_multiple_grids.html">Tuning Multiple Hyperparameters Grids</a></li>
@@ -455,7 +456,10 @@
 <section id="complex-models">
 <h1><span class="section-number">8.4. </span>Complex Models<a class="headerlink" href="#complex-models" title="Link to this heading">¶</a></h1>
 <p>Examples that show how to build complex models.</p>
-<div class="sphx-glr-tag-list" id="sg-tag-list"></div><div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example uses the iris dataset and tests a regression model in which the target variable is generated from some features within the cross-validation procedure. We will use the Iris dataset and generate a target variable using PCA on the petal features. Then, we will evaluate if a regression model can predict the generated target from the sepal features"><img alt="" src="../../_images/sphx_glr_run_generate_target_thumb.png"/>
+<div class="sphx-glr-tag-list" id="sg-tag-list"></div><div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example uses the iris dataset and performs binary classifications using different models. At the end, it compares the performance of the models using different scoring functions and performs a statistical test to assess whether the difference in performance is significant."><img alt="" src="../../_images/sphx_glr_run_xgboost_early_stopping_thumb.png"/>
+<p><a class="reference internal" href="run_xgboost_early_stopping.html"><span class="doc">Simple Model Comparison</span></a></p>
+<div class="sphx-glr-thumbnail-title">Simple Model Comparison</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example uses the iris dataset and tests a regression model in which the target variable is generated from some features within the cross-validation procedure. We will use the Iris dataset and generate a target variable using PCA on the petal features. Then, we will evaluate if a regression model can predict the generated target from the sepal features"><img alt="" src="../../_images/sphx_glr_run_generate_target_thumb.png"/>
 <p><a class="reference internal" href="run_generate_target.html"><span class="doc">Target Generation</span></a></p>
 <div class="sphx-glr-thumbnail-title">Target Generation</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="This example uses the sklearn diabetes regression dataset, and transforms the target variable, in this case, using z-score. Then, we perform a regression analysis using Ridge Regression model."><img alt="" src="../../_images/sphx_glr_run_apply_to_target_thumb.png"/>
@@ -484,12 +488,12 @@
 </div>
 <footer>
 <div class="related-pages">
-<a class="next-page" href="run_generate_target.html">
+<a class="next-page" href="run_xgboost_early_stopping.html">
 <div class="page-info">
 <div class="context">
 <span>Next</span>
 </div>
-<div class="title">Target Generation</div>
+<div class="title">Simple Model Comparison</div>
 </div>
 <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
 </a>
@@ -526,7 +530,7 @@
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=6cf030bf"></script>
+</div><script src="../../_static/documentation_options.js?v=8af287f3"></script>
 <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -222,6 +222,7 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../03_complex_models/index.html">8.4. Complex Models</a><input aria-label="Toggle navigation of 8.4. Complex Models" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_xgboost_early_stopping.html">Simple Model Comparison</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_generate_target.html">Target Generation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_apply_to_target.html">Transforming target variable with z-score</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_hyperparameter_multiple_grids.html">Tuning Multiple Hyperparameters Grids</a></li>
@@ -467,7 +468,7 @@ whether the difference in performance is significant.</p>
 <span class="c1"># License: AGPL</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">RepeatedStratifiedKFold</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">RepeatedStratifiedKFold</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">julearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_cross_validation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">julearn.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">configure_logging</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">julearn.stats.corrected_ttest</span><span class="w"> </span><span class="kn">import</span> <span class="n">corrected_ttest</span>
@@ -477,74 +478,74 @@ whether the difference in performance is significant.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">configure_logging</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s2">"INFO"</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:27,613 - julearn - INFO - ===== Lib Versions =====
-2026-06-04 11:00:27,613 - julearn - INFO - numpy: 2.4.6
-2026-06-04 11:00:27,613 - julearn - INFO - scipy: 1.17.1
-2026-06-04 11:00:27,613 - julearn - INFO - sklearn: 1.8.0
-2026-06-04 11:00:27,613 - julearn - INFO - pandas: 3.0.3
-2026-06-04 11:00:27,613 - julearn - INFO - julearn: 0.2.6.dev476
-2026-06-04 11:00:27,613 - julearn - INFO - ========================
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:54,270 - julearn - INFO - ===== Lib Versions =====
+2026-07-27 16:35:54,271 - julearn - INFO - numpy: 2.5.1
+2026-07-27 16:35:54,271 - julearn - INFO - scipy: 1.18.0
+2026-07-27 16:35:54,271 - julearn - INFO - sklearn: 1.8.0
+2026-07-27 16:35:54,271 - julearn - INFO - pandas: 3.0.5
+2026-07-27 16:35:54,271 - julearn - INFO - julearn: 0.2.6.dev484
+2026-07-27 16:35:54,271 - julearn - INFO - ========================
 </pre></div>
 </div>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"iris"</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_iris</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"iris"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The dataset has three kind of species. We will keep two to perform a binary
 classification.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a><span class="p">[</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a><span class="p">[</span><span class="s2">"species"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">"versicolor"</span><span class="p">,</span> <span class="s2">"virginica"</span><span class="p">])]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_iris</span> <span class="o">=</span> <span class="n">df_iris</span><span class="p">[</span><span class="n">df_iris</span><span class="p">[</span><span class="s2">"species"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">"versicolor"</span><span class="p">,</span> <span class="s2">"virginica"</span><span class="p">])]</span>
 </pre></div>
 </div>
 <p>As features, we will use the sepal length, width and petal length.
 We will try to predict the species.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a> <span class="o">=</span> <span class="p">[</span><span class="s2">"sepal_length"</span><span class="p">,</span> <span class="s2">"sepal_width"</span><span class="p">,</span> <span class="s2">"petal_length"</span><span class="p">]</span>
-<a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a> <span class="o">=</span> <span class="s2">"species"</span>
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores</span></a> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"sepal_length"</span><span class="p">,</span> <span class="s2">"sepal_width"</span><span class="p">,</span> <span class="s2">"petal_length"</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="s2">"species"</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_iris</span><span class="p">,</span>
     <span class="n">model</span><span class="o">=</span><span class="s2">"svm"</span><span class="p">,</span>
     <span class="n">problem_type</span><span class="o">=</span><span class="s2">"classification"</span><span class="p">,</span>
     <span class="n">preprocess</span><span class="o">=</span><span class="s2">"zscore"</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores</span></a><span class="p">[</span><span class="s2">"test_score"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:27,615 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:00:27,615 - julearn - INFO - Using dataframe as input
-2026-06-04 11:00:27,615 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:27,616 - julearn - INFO -      Target: species
-2026-06-04 11:00:27,616 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:27,616 - julearn - INFO -      X_types:{}
-2026-06-04 11:00:27,616 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
-/tmp/tmpepsykigg/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:54,273 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:35:54,273 - julearn - INFO - Using dataframe as input
+2026-07-27 16:35:54,273 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:54,273 - julearn - INFO -      Target: species
+2026-07-27 16:35:54,274 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:54,274 - julearn - INFO -      X_types:{}
+2026-07-27 16:35:54,274 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
   warn_with_log(
-2026-06-04 11:00:27,617 - julearn - INFO - ====================
-2026-06-04 11:00:27,617 - julearn - INFO -
-2026-06-04 11:00:27,617 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:27,617 - julearn - INFO - Step added
-2026-06-04 11:00:27,617 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:27,617 - julearn - INFO - Step added
-2026-06-04 11:00:27,618 - julearn - INFO - = Model Parameters =
-2026-06-04 11:00:27,618 - julearn - INFO - ====================
-2026-06-04 11:00:27,618 - julearn - INFO -
-2026-06-04 11:00:27,618 - julearn - INFO - = Data Information =
-2026-06-04 11:00:27,618 - julearn - INFO -      Problem type: classification
-2026-06-04 11:00:27,618 - julearn - INFO -      Number of samples: 100
-2026-06-04 11:00:27,618 - julearn - INFO -      Number of features: 3
-2026-06-04 11:00:27,618 - julearn - INFO - ====================
-2026-06-04 11:00:27,618 - julearn - INFO -
-2026-06-04 11:00:27,618 - julearn - INFO -      Number of classes: 2
-2026-06-04 11:00:27,618 - julearn - INFO -      Target type: str
-2026-06-04 11:00:27,619 - julearn - INFO -      Class distributions: species
+2026-07-27 16:35:54,275 - julearn - INFO - ====================
+2026-07-27 16:35:54,275 - julearn - INFO -
+2026-07-27 16:35:54,275 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:54,275 - julearn - INFO - Step added
+2026-07-27 16:35:54,275 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:54,275 - julearn - INFO - Step added
+2026-07-27 16:35:54,275 - julearn - INFO - = Model Parameters =
+2026-07-27 16:35:54,276 - julearn - INFO - ====================
+2026-07-27 16:35:54,276 - julearn - INFO -
+2026-07-27 16:35:54,276 - julearn - INFO - = Data Information =
+2026-07-27 16:35:54,276 - julearn - INFO -      Problem type: classification
+2026-07-27 16:35:54,276 - julearn - INFO -      Number of samples: 100
+2026-07-27 16:35:54,276 - julearn - INFO -      Number of features: 3
+2026-07-27 16:35:54,276 - julearn - INFO - ====================
+2026-07-27 16:35:54,276 - julearn - INFO -
+2026-07-27 16:35:54,276 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:35:54,276 - julearn - INFO -      Target type: str
+2026-07-27 16:35:54,277 - julearn - INFO -      Class distributions: species
 versicolor    50
 virginica     50
 Name: count, dtype: int64
-2026-06-04 11:00:27,619 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
-2026-06-04 11:00:27,620 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:35:54,277 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
+2026-07-27 16:35:54,278 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:00:27,620 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:35:54,278 - julearn - INFO - Binary classification problem detected.
 0    0.90
 1    0.75
 2    0.95
@@ -556,8 +557,8 @@ Name: test_score, dtype: float64
 <p>Additionally, we can choose to assess the performance of the model using
 different scoring functions.</p>
 <p>For example, we might have an unbalanced dataset:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_unbalanced</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a><span class="p">[</span><span class="mi">20</span><span class="p">:]</span>  <span class="c1"># drop the first 20 versicolor samples</span>
-<span class="nb">print</span><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_unbalanced</span></a><span class="p">[</span><span class="s2">"species"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_unbalanced</span> <span class="o">=</span> <span class="n">df_iris</span><span class="p">[</span><span class="mi">20</span><span class="p">:]</span>  <span class="c1"># drop the first 20 versicolor samples</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_unbalanced</span><span class="p">[</span><span class="s2">"species"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>species
@@ -567,175 +568,175 @@ Name: count, dtype: int64
 </pre></div>
 </div>
 <p>So we will choose to use the <cite>balanced_accuracy</cite> and <cite>roc_auc</cite> metrics.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">scoring</span></a> <span class="o">=</span> <span class="p">[</span><span class="s2">"balanced_accuracy"</span><span class="p">,</span> <span class="s2">"roc_auc"</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scoring</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"balanced_accuracy"</span><span class="p">,</span> <span class="s2">"roc_auc"</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Since we are comparing the performance of different models, we will need
 to use the same random seed to split the data in the same way.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">cv</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">RepeatedStratifiedKFold</span></a><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span> <span class="o">=</span> <span class="n">RepeatedStratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>First we will use a default SVM model.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores1</span></a> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_unbalanced</span></a><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scores1</span> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_unbalanced</span><span class="p">,</span>
     <span class="n">model</span><span class="o">=</span><span class="s2">"svm"</span><span class="p">,</span>
     <span class="n">preprocess</span><span class="o">=</span><span class="s2">"zscore"</span><span class="p">,</span>
     <span class="n">problem_type</span><span class="o">=</span><span class="s2">"classification"</span><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">scoring</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">scoring</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">cv</span></a><span class="o">=</span><a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">cv</span></a><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
 <span class="p">)</span>
 
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores1</span></a><span class="p">[</span><span class="s2">"model"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"svm"</span>
+<span class="n">scores1</span><span class="p">[</span><span class="s2">"model"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"svm"</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:27,663 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:00:27,663 - julearn - INFO - Using dataframe as input
-2026-06-04 11:00:27,664 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:27,664 - julearn - INFO -      Target: species
-2026-06-04 11:00:27,664 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:27,664 - julearn - INFO -      X_types:{}
-2026-06-04 11:00:27,664 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
-/tmp/tmpepsykigg/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:54,320 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:35:54,320 - julearn - INFO - Using dataframe as input
+2026-07-27 16:35:54,320 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:54,320 - julearn - INFO -      Target: species
+2026-07-27 16:35:54,320 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:54,320 - julearn - INFO -      X_types:{}
+2026-07-27 16:35:54,320 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
   warn_with_log(
-2026-06-04 11:00:27,665 - julearn - INFO - ====================
-2026-06-04 11:00:27,665 - julearn - INFO -
-2026-06-04 11:00:27,665 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:27,665 - julearn - INFO - Step added
-2026-06-04 11:00:27,665 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:27,665 - julearn - INFO - Step added
-2026-06-04 11:00:27,666 - julearn - INFO - = Model Parameters =
-2026-06-04 11:00:27,666 - julearn - INFO - ====================
-2026-06-04 11:00:27,666 - julearn - INFO -
-2026-06-04 11:00:27,666 - julearn - INFO - = Data Information =
-2026-06-04 11:00:27,666 - julearn - INFO -      Problem type: classification
-2026-06-04 11:00:27,666 - julearn - INFO -      Number of samples: 80
-2026-06-04 11:00:27,666 - julearn - INFO -      Number of features: 3
-2026-06-04 11:00:27,666 - julearn - INFO - ====================
-2026-06-04 11:00:27,666 - julearn - INFO -
-2026-06-04 11:00:27,666 - julearn - INFO -      Number of classes: 2
-2026-06-04 11:00:27,666 - julearn - INFO -      Target type: str
-2026-06-04 11:00:27,667 - julearn - INFO -      Class distributions: species
+2026-07-27 16:35:54,321 - julearn - INFO - ====================
+2026-07-27 16:35:54,321 - julearn - INFO -
+2026-07-27 16:35:54,321 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:54,321 - julearn - INFO - Step added
+2026-07-27 16:35:54,321 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:54,322 - julearn - INFO - Step added
+2026-07-27 16:35:54,322 - julearn - INFO - = Model Parameters =
+2026-07-27 16:35:54,322 - julearn - INFO - ====================
+2026-07-27 16:35:54,322 - julearn - INFO -
+2026-07-27 16:35:54,322 - julearn - INFO - = Data Information =
+2026-07-27 16:35:54,322 - julearn - INFO -      Problem type: classification
+2026-07-27 16:35:54,322 - julearn - INFO -      Number of samples: 80
+2026-07-27 16:35:54,322 - julearn - INFO -      Number of features: 3
+2026-07-27 16:35:54,322 - julearn - INFO - ====================
+2026-07-27 16:35:54,322 - julearn - INFO -
+2026-07-27 16:35:54,323 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:35:54,323 - julearn - INFO -      Target type: str
+2026-07-27 16:35:54,323 - julearn - INFO -      Class distributions: species
 virginica     50
 versicolor    30
 Name: count, dtype: int64
-2026-06-04 11:00:27,667 - julearn - INFO - Using outer CV scheme RepeatedStratifiedKFold(n_repeats=5, n_splits=5, random_state=42)
-2026-06-04 11:00:27,668 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:35:54,324 - julearn - INFO - Using outer CV scheme RepeatedStratifiedKFold(n_repeats=5, n_splits=5, random_state=42)
+2026-07-27 16:35:54,324 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:00:27,668 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:35:54,324 - julearn - INFO - Binary classification problem detected.
 </pre></div>
 </div>
 <p>Second we will use a default Random Forest model.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores2</span></a> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_unbalanced</span></a><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scores2</span> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_unbalanced</span><span class="p">,</span>
     <span class="n">model</span><span class="o">=</span><span class="s2">"rf"</span><span class="p">,</span>
     <span class="n">preprocess</span><span class="o">=</span><span class="s2">"zscore"</span><span class="p">,</span>
     <span class="n">problem_type</span><span class="o">=</span><span class="s2">"classification"</span><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">scoring</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">scoring</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">cv</span></a><span class="o">=</span><a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">cv</span></a><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
 <span class="p">)</span>
 
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores2</span></a><span class="p">[</span><span class="s2">"model"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"rf"</span>
+<span class="n">scores2</span><span class="p">[</span><span class="s2">"model"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"rf"</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:27,905 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:00:27,905 - julearn - INFO - Using dataframe as input
-2026-06-04 11:00:27,905 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:27,905 - julearn - INFO -      Target: species
-2026-06-04 11:00:27,905 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:27,905 - julearn - INFO -      X_types:{}
-2026-06-04 11:00:27,905 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
-/tmp/tmpepsykigg/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:54,551 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:35:54,552 - julearn - INFO - Using dataframe as input
+2026-07-27 16:35:54,552 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:54,552 - julearn - INFO -      Target: species
+2026-07-27 16:35:54,552 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:54,552 - julearn - INFO -      X_types:{}
+2026-07-27 16:35:54,552 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
   warn_with_log(
-2026-06-04 11:00:27,906 - julearn - INFO - ====================
-2026-06-04 11:00:27,906 - julearn - INFO -
-2026-06-04 11:00:27,906 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:27,907 - julearn - INFO - Step added
-2026-06-04 11:00:27,907 - julearn - INFO - Adding step rf that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:27,907 - julearn - INFO - Step added
-2026-06-04 11:00:27,907 - julearn - INFO - = Model Parameters =
-2026-06-04 11:00:27,907 - julearn - INFO - ====================
-2026-06-04 11:00:27,907 - julearn - INFO -
-2026-06-04 11:00:27,907 - julearn - INFO - = Data Information =
-2026-06-04 11:00:27,907 - julearn - INFO -      Problem type: classification
-2026-06-04 11:00:27,907 - julearn - INFO -      Number of samples: 80
-2026-06-04 11:00:27,907 - julearn - INFO -      Number of features: 3
-2026-06-04 11:00:27,908 - julearn - INFO - ====================
-2026-06-04 11:00:27,908 - julearn - INFO -
-2026-06-04 11:00:27,908 - julearn - INFO -      Number of classes: 2
-2026-06-04 11:00:27,908 - julearn - INFO -      Target type: str
-2026-06-04 11:00:27,908 - julearn - INFO -      Class distributions: species
+2026-07-27 16:35:54,553 - julearn - INFO - ====================
+2026-07-27 16:35:54,553 - julearn - INFO -
+2026-07-27 16:35:54,553 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:54,553 - julearn - INFO - Step added
+2026-07-27 16:35:54,553 - julearn - INFO - Adding step rf that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:54,553 - julearn - INFO - Step added
+2026-07-27 16:35:54,554 - julearn - INFO - = Model Parameters =
+2026-07-27 16:35:54,554 - julearn - INFO - ====================
+2026-07-27 16:35:54,554 - julearn - INFO -
+2026-07-27 16:35:54,554 - julearn - INFO - = Data Information =
+2026-07-27 16:35:54,554 - julearn - INFO -      Problem type: classification
+2026-07-27 16:35:54,554 - julearn - INFO -      Number of samples: 80
+2026-07-27 16:35:54,554 - julearn - INFO -      Number of features: 3
+2026-07-27 16:35:54,554 - julearn - INFO - ====================
+2026-07-27 16:35:54,554 - julearn - INFO -
+2026-07-27 16:35:54,554 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:35:54,555 - julearn - INFO -      Target type: str
+2026-07-27 16:35:54,555 - julearn - INFO -      Class distributions: species
 virginica     50
 versicolor    30
 Name: count, dtype: int64
-2026-06-04 11:00:27,909 - julearn - INFO - Using outer CV scheme RepeatedStratifiedKFold(n_repeats=5, n_splits=5, random_state=42)
-2026-06-04 11:00:27,909 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:35:54,555 - julearn - INFO - Using outer CV scheme RepeatedStratifiedKFold(n_repeats=5, n_splits=5, random_state=42)
+2026-07-27 16:35:54,556 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:00:27,909 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:35:54,556 - julearn - INFO - Binary classification problem detected.
 </pre></div>
 </div>
 <p>The third model will be a SVM with a linear kernel.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores3</span></a> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_unbalanced</span></a><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scores3</span> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_unbalanced</span><span class="p">,</span>
     <span class="n">model</span><span class="o">=</span><span class="s2">"svm"</span><span class="p">,</span>
     <span class="n">model_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"svm__kernel"</span><span class="p">:</span> <span class="s2">"linear"</span><span class="p">},</span>
     <span class="n">preprocess</span><span class="o">=</span><span class="s2">"zscore"</span><span class="p">,</span>
     <span class="n">problem_type</span><span class="o">=</span><span class="s2">"classification"</span><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">scoring</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">scoring</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">cv</span></a><span class="o">=</span><a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">cv</span></a><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
 <span class="p">)</span>
 
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores3</span></a><span class="p">[</span><span class="s2">"model"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"svm_linear"</span>
+<span class="n">scores3</span><span class="p">[</span><span class="s2">"model"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"svm_linear"</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:30,307 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:00:30,307 - julearn - INFO - Using dataframe as input
-2026-06-04 11:00:30,307 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:30,307 - julearn - INFO -      Target: species
-2026-06-04 11:00:30,308 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:30,308 - julearn - INFO -      X_types:{}
-2026-06-04 11:00:30,308 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
-/tmp/tmpepsykigg/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:56,886 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:35:56,886 - julearn - INFO - Using dataframe as input
+2026-07-27 16:35:56,887 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:56,887 - julearn - INFO -      Target: species
+2026-07-27 16:35:56,887 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:56,887 - julearn - INFO -      X_types:{}
+2026-07-27 16:35:56,887 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
   warn_with_log(
-2026-06-04 11:00:30,309 - julearn - INFO - ====================
-2026-06-04 11:00:30,309 - julearn - INFO -
-2026-06-04 11:00:30,309 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:30,309 - julearn - INFO - Step added
-2026-06-04 11:00:30,309 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:30,309 - julearn - INFO - Setting hyperparameter kernel = linear
-2026-06-04 11:00:30,309 - julearn - INFO - Step added
-2026-06-04 11:00:30,310 - julearn - INFO - = Model Parameters =
-2026-06-04 11:00:30,310 - julearn - INFO - ====================
-2026-06-04 11:00:30,310 - julearn - INFO -
-2026-06-04 11:00:30,310 - julearn - INFO - = Data Information =
-2026-06-04 11:00:30,310 - julearn - INFO -      Problem type: classification
-2026-06-04 11:00:30,310 - julearn - INFO -      Number of samples: 80
-2026-06-04 11:00:30,310 - julearn - INFO -      Number of features: 3
-2026-06-04 11:00:30,310 - julearn - INFO - ====================
-2026-06-04 11:00:30,310 - julearn - INFO -
-2026-06-04 11:00:30,310 - julearn - INFO -      Number of classes: 2
-2026-06-04 11:00:30,310 - julearn - INFO -      Target type: str
-2026-06-04 11:00:30,311 - julearn - INFO -      Class distributions: species
+2026-07-27 16:35:56,888 - julearn - INFO - ====================
+2026-07-27 16:35:56,888 - julearn - INFO -
+2026-07-27 16:35:56,888 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:56,888 - julearn - INFO - Step added
+2026-07-27 16:35:56,888 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:56,888 - julearn - INFO - Setting hyperparameter kernel = linear
+2026-07-27 16:35:56,888 - julearn - INFO - Step added
+2026-07-27 16:35:56,889 - julearn - INFO - = Model Parameters =
+2026-07-27 16:35:56,889 - julearn - INFO - ====================
+2026-07-27 16:35:56,889 - julearn - INFO -
+2026-07-27 16:35:56,889 - julearn - INFO - = Data Information =
+2026-07-27 16:35:56,889 - julearn - INFO -      Problem type: classification
+2026-07-27 16:35:56,889 - julearn - INFO -      Number of samples: 80
+2026-07-27 16:35:56,889 - julearn - INFO -      Number of features: 3
+2026-07-27 16:35:56,889 - julearn - INFO - ====================
+2026-07-27 16:35:56,889 - julearn - INFO -
+2026-07-27 16:35:56,889 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:35:56,889 - julearn - INFO -      Target type: str
+2026-07-27 16:35:56,890 - julearn - INFO -      Class distributions: species
 virginica     50
 versicolor    30
 Name: count, dtype: int64
-2026-06-04 11:00:30,312 - julearn - INFO - Using outer CV scheme RepeatedStratifiedKFold(n_repeats=5, n_splits=5, random_state=42)
-2026-06-04 11:00:30,312 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:35:56,890 - julearn - INFO - Using outer CV scheme RepeatedStratifiedKFold(n_repeats=5, n_splits=5, random_state=42)
+2026-07-27 16:35:56,891 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:00:30,312 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:35:56,891 - julearn - INFO - Binary classification problem detected.
 </pre></div>
 </div>
 <p>We can now compare the performance of the models using corrected statistics.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">stats_df</span></a> <span class="o">=</span> <span class="n">corrected_ttest</span><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores1</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores2</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores3</span></a><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">stats_df</span></a><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">stats_df</span> <span class="o">=</span> <span class="n">corrected_ttest</span><span class="p">(</span><span class="n">scores1</span><span class="p">,</span> <span class="n">scores2</span><span class="p">,</span> <span class="n">scores3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stats_df</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>                   metric    t-stat  ...     model_2 p-val-corrected
@@ -756,7 +757,7 @@ Name: count, dtype: int64
 Viewer.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">julearn.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_scores</span>
 
-<a class="sphx-glr-backref-module-panel sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://panel.holoviz.org/api/panel.html#panel.Column" title="panel.Column"><span class="n">panel</span></a> <span class="o">=</span> <span class="n">plot_scores</span><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores1</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores2</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores3</span></a><span class="p">)</span>
+<span class="n">panel</span> <span class="o">=</span> <span class="n">plot_scores</span><span class="p">(</span><span class="n">scores1</span><span class="p">,</span> <span class="n">scores2</span><span class="p">,</span> <span class="n">scores3</span><span class="p">)</span>
 <span class="c1"># panel.show()</span>
 <span class="c1"># uncomment the previous line show the plot</span>
 <span class="c1"># read the documentation for more information</span>
@@ -769,7 +770,7 @@ Viewer.</p>
 <p>The plot is interactive. You can zoom in and out, and hover over.
 However, buttons will not work in this documentation.</p>
 </div>
-<script id="b9b6769e-fe1d-46fc-adfb-15bddf128d90" src="bokeh-content-2f1b7db15b544396aefec660b56cc1ec-auto_examples-01_model_comparison-plot_simple_model_comparison.js"></script><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.025 seconds)</p>
+<script id="ccb8c265-5a1f-4601-a411-051f816d0363" src="bokeh-content-7d6d1b35231b46cea2f4db5942099716-auto_examples-01_model_comparison-plot_simple_model_comparison.js"></script><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.933 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-01-model-comparison-plot-simple-model-comparison-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/c49d88d09ef11db04561dd7cf170906f/plot_simple_model_comparison.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_simple_model_comparison.ipynb</span></code></a></p>
@@ -829,7 +830,7 @@ However, buttons will not work in this documentation.</p>
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=6cf030bf"></script>
+</div><script src="../../_static/documentation_options.js?v=8af287f3"></script>
 <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -222,6 +222,7 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../03_complex_models/index.html">8.4. Complex Models</a><input aria-label="Toggle navigation of 8.4. Complex Models" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_xgboost_early_stopping.html">Simple Model Comparison</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_generate_target.html">Target Generation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_apply_to_target.html">Transforming target variable with z-score</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_complex_models/run_hyperparameter_multiple_grids.html">Tuning Multiple Hyperparameters Grids</a></li>
@@ -467,7 +468,7 @@ classification using a Support Vector Machine classifier.</p>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">RepeatedStratifiedKFold</span></a><span class="p">,</span> <span class="n">ShuffleSplit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">RepeatedStratifiedKFold</span><span class="p">,</span> <span class="n">ShuffleSplit</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">julearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_cross_validation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">julearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">PipelineCreator</span>
@@ -478,111 +479,111 @@ classification using a Support Vector Machine classifier.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">configure_logging</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s2">"INFO"</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:30,815 - julearn - INFO - ===== Lib Versions =====
-2026-06-04 11:00:30,815 - julearn - INFO - numpy: 2.4.6
-2026-06-04 11:00:30,815 - julearn - INFO - scipy: 1.17.1
-2026-06-04 11:00:30,815 - julearn - INFO - sklearn: 1.8.0
-2026-06-04 11:00:30,815 - julearn - INFO - pandas: 3.0.3
-2026-06-04 11:00:30,815 - julearn - INFO - julearn: 0.2.6.dev476
-2026-06-04 11:00:30,815 - julearn - INFO - ========================
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:57,369 - julearn - INFO - ===== Lib Versions =====
+2026-07-27 16:35:57,369 - julearn - INFO - numpy: 2.5.1
+2026-07-27 16:35:57,369 - julearn - INFO - scipy: 1.18.0
+2026-07-27 16:35:57,369 - julearn - INFO - sklearn: 1.8.0
+2026-07-27 16:35:57,369 - julearn - INFO - pandas: 3.0.5
+2026-07-27 16:35:57,369 - julearn - INFO - julearn: 0.2.6.dev484
+2026-07-27 16:35:57,369 - julearn - INFO - ========================
 </pre></div>
 </div>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"iris"</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_iris</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"iris"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The dataset has three kind of species. We will keep two to perform a binary
 classification.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a><span class="p">[</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a><span class="p">[</span><span class="s2">"species"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">"versicolor"</span><span class="p">,</span> <span class="s2">"virginica"</span><span class="p">])]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_iris</span> <span class="o">=</span> <span class="n">df_iris</span><span class="p">[</span><span class="n">df_iris</span><span class="p">[</span><span class="s2">"species"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">"versicolor"</span><span class="p">,</span> <span class="s2">"virginica"</span><span class="p">])]</span>
 </pre></div>
 </div>
 <p>As features, we will use the sepal length, width and petal length.
 We will try to predict the species.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a> <span class="o">=</span> <span class="p">[</span><span class="s2">"sepal_length"</span><span class="p">,</span> <span class="s2">"sepal_width"</span><span class="p">,</span> <span class="s2">"petal_length"</span><span class="p">]</span>
-<a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a> <span class="o">=</span> <span class="s2">"species"</span>
-<a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict"><span class="n">X_types</span></a> <span class="o">=</span> <span class="p">{</span><span class="s2">"continuous"</span><span class="p">:</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">}</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"sepal_length"</span><span class="p">,</span> <span class="s2">"sepal_width"</span><span class="p">,</span> <span class="s2">"petal_length"</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="s2">"species"</span>
+<span class="n">X_types</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"continuous"</span><span class="p">:</span> <span class="n">X</span><span class="p">}</span>
 
 <span class="n">creator</span> <span class="o">=</span> <span class="n">PipelineCreator</span><span class="p">(</span><span class="n">problem_type</span><span class="o">=</span><span class="s2">"classification"</span><span class="p">)</span>
 <span class="n">creator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"zscore"</span><span class="p">)</span>
 <span class="n">creator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"svm"</span><span class="p">)</span>
 
-<a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">cv</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">RepeatedStratifiedKFold</span></a><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">cv</span> <span class="o">=</span> <span class="n">RepeatedStratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 
-<a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a><span class="p">,</span> <span class="n">inspector</span> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list"><span class="n">X</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="o">=</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str"><span class="n">y</span></a><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">df_iris</span></a><span class="p">,</span>
-    <a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a><span class="o">=</span><span class="n">creator</span><span class="p">,</span>
+<span class="n">scores</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">inspector</span> <span class="o">=</span> <span class="n">run_cross_validation</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_iris</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">creator</span><span class="p">,</span>
     <span class="n">return_inspector</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">cv</span></a><span class="o">=</span><a class="sphx-glr-backref-module-sklearn-model_selection sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html#sklearn.model_selection.RepeatedStratifiedKFold" title="sklearn.model_selection.RepeatedStratifiedKFold"><span class="n">cv</span></a><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">scores</span></a><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-06-04 11:00:30,817 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:30,818 - julearn - INFO - Step added
-2026-06-04 11:00:30,818 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-06-04 11:00:30,818 - julearn - INFO - Step added
-2026-06-04 11:00:30,818 - julearn - INFO - ==== Input Data ====
-2026-06-04 11:00:30,818 - julearn - INFO - Using dataframe as input
-2026-06-04 11:00:30,818 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:30,818 - julearn - INFO -      Target: species
-2026-06-04 11:00:30,818 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-06-04 11:00:30,818 - julearn - INFO -      X_types:{}
-2026-06-04 11:00:30,818 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
-/tmp/tmpepsykigg/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:57,371 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:57,372 - julearn - INFO - Step added
+2026-07-27 16:35:57,372 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:35:57,372 - julearn - INFO - Step added
+2026-07-27 16:35:57,372 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:35:57,372 - julearn - INFO - Using dataframe as input
+2026-07-27 16:35:57,372 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:57,372 - julearn - INFO -      Target: species
+2026-07-27 16:35:57,372 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:35:57,372 - julearn - INFO -      X_types:{}
+2026-07-27 16:35:57,373 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
   warn_with_log(
-2026-06-04 11:00:30,819 - julearn - INFO - ====================
-2026-06-04 11:00:30,820 - julearn - INFO -
-2026-06-04 11:00:30,820 - julearn - INFO - = Model Parameters =
-2026-06-04 11:00:30,820 - julearn - INFO - ====================
-2026-06-04 11:00:30,820 - julearn - INFO -
-2026-06-04 11:00:30,820 - julearn - INFO - = Data Information =
-2026-06-04 11:00:30,820 - julearn - INFO -      Problem type: classification
-2026-06-04 11:00:30,820 - julearn - INFO -      Number of samples: 100
-2026-06-04 11:00:30,820 - julearn - INFO -      Number of features: 3
-2026-06-04 11:00:30,820 - julearn - INFO - ====================
-2026-06-04 11:00:30,820 - julearn - INFO -
-2026-06-04 11:00:30,821 - julearn - INFO -      Number of classes: 2
-2026-06-04 11:00:30,821 - julearn - INFO -      Target type: str
-2026-06-04 11:00:30,821 - julearn - INFO -      Class distributions: species
+2026-07-27 16:35:57,373 - julearn - INFO - ====================
+2026-07-27 16:35:57,373 - julearn - INFO -
+2026-07-27 16:35:57,374 - julearn - INFO - = Model Parameters =
+2026-07-27 16:35:57,374 - julearn - INFO - ====================
+2026-07-27 16:35:57,374 - julearn - INFO -
+2026-07-27 16:35:57,374 - julearn - INFO - = Data Information =
+2026-07-27 16:35:57,374 - julearn - INFO -      Problem type: classification
+2026-07-27 16:35:57,374 - julearn - INFO -      Number of samples: 100
+2026-07-27 16:35:57,374 - julearn - INFO -      Number of features: 3
+2026-07-27 16:35:57,374 - julearn - INFO - ====================
+2026-07-27 16:35:57,374 - julearn - INFO -
+2026-07-27 16:35:57,375 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:35:57,375 - julearn - INFO -      Target type: str
+2026-07-27 16:35:57,375 - julearn - INFO -      Class distributions: species
 versicolor    50
 virginica     50
 Name: count, dtype: int64
-2026-06-04 11:00:30,822 - julearn - INFO - Using outer CV scheme RepeatedStratifiedKFold(n_repeats=4, n_splits=5, random_state=200) (incl. final model)
-2026-06-04 11:00:30,822 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmpepsykigg/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:35:57,375 - julearn - INFO - Using outer CV scheme RepeatedStratifiedKFold(n_repeats=4, n_splits=5, random_state=200) (incl. final model)
+2026-07-27 16:35:57,376 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-06-04 11:00:30,822 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:35:57,376 - julearn - INFO - Binary classification problem detected.
     fit_time  score_time  ... fold                          cv_mdsum
-0   0.003697    0.003382  ...    0  42489ff0163b2f12752440a6b7ef74c7
-1   0.003594    0.003333  ...    1  42489ff0163b2f12752440a6b7ef74c7
-2   0.003594    0.003359  ...    2  42489ff0163b2f12752440a6b7ef74c7
-3   0.003586    0.003304  ...    3  42489ff0163b2f12752440a6b7ef74c7
-4   0.003560    0.003380  ...    4  42489ff0163b2f12752440a6b7ef74c7
-5   0.003580    0.003320  ...    0  42489ff0163b2f12752440a6b7ef74c7
-6   0.003541    0.003400  ...    1  42489ff0163b2f12752440a6b7ef74c7
-7   0.003641    0.003376  ...    2  42489ff0163b2f12752440a6b7ef74c7
-8   0.003605    0.003369  ...    3  42489ff0163b2f12752440a6b7ef74c7
-9   0.003585    0.003309  ...    4  42489ff0163b2f12752440a6b7ef74c7
-10  0.003572    0.003307  ...    0  42489ff0163b2f12752440a6b7ef74c7
-11  0.003544    0.003364  ...    1  42489ff0163b2f12752440a6b7ef74c7
-12  0.003569    0.003324  ...    2  42489ff0163b2f12752440a6b7ef74c7
-13  0.003578    0.003393  ...    3  42489ff0163b2f12752440a6b7ef74c7
-14  0.003561    0.003674  ...    4  42489ff0163b2f12752440a6b7ef74c7
-15  0.003551    0.003338  ...    0  42489ff0163b2f12752440a6b7ef74c7
-16  0.003570    0.003674  ...    1  42489ff0163b2f12752440a6b7ef74c7
-17  0.003567    0.003329  ...    2  42489ff0163b2f12752440a6b7ef74c7
-18  0.003594    0.003392  ...    3  42489ff0163b2f12752440a6b7ef74c7
-19  0.003599    0.003372  ...    4  42489ff0163b2f12752440a6b7ef74c7
+0   0.003483    0.003260  ...    0  42489ff0163b2f12752440a6b7ef74c7
+1   0.003489    0.003268  ...    1  42489ff0163b2f12752440a6b7ef74c7
+2   0.003481    0.003300  ...    2  42489ff0163b2f12752440a6b7ef74c7
+3   0.003454    0.003253  ...    3  42489ff0163b2f12752440a6b7ef74c7
+4   0.003649    0.003312  ...    4  42489ff0163b2f12752440a6b7ef74c7
+5   0.003506    0.003300  ...    0  42489ff0163b2f12752440a6b7ef74c7
+6   0.003473    0.003261  ...    1  42489ff0163b2f12752440a6b7ef74c7
+7   0.003484    0.003275  ...    2  42489ff0163b2f12752440a6b7ef74c7
+8   0.003490    0.003265  ...    3  42489ff0163b2f12752440a6b7ef74c7
+9   0.003453    0.003254  ...    4  42489ff0163b2f12752440a6b7ef74c7
+10  0.003492    0.003272  ...    0  42489ff0163b2f12752440a6b7ef74c7
+11  0.003458    0.003277  ...    1  42489ff0163b2f12752440a6b7ef74c7
+12  0.003496    0.003300  ...    2  42489ff0163b2f12752440a6b7ef74c7
+13  0.003484    0.003286  ...    3  42489ff0163b2f12752440a6b7ef74c7
+14  0.003434    0.003556  ...    4  42489ff0163b2f12752440a6b7ef74c7
+15  0.003456    0.003252  ...    0  42489ff0163b2f12752440a6b7ef74c7
+16  0.003464    0.003288  ...    1  42489ff0163b2f12752440a6b7ef74c7
+17  0.003592    0.003345  ...    2  42489ff0163b2f12752440a6b7ef74c7
+18  0.003492    0.003261  ...    3  42489ff0163b2f12752440a6b7ef74c7
+19  0.003455    0.003289  ...    4  42489ff0163b2f12752440a6b7ef74c7
 
 [20 rows x 9 columns]
 </pre></div>
 </div>
 <p>We can now inspect the predictions of the model for each fold.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">cv_predictions</span></a> <span class="o">=</span> <span class="n">inspector</span><span class="o">.</span><span class="n">folds</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">cv_predictions</span> <span class="o">=</span> <span class="n">inspector</span><span class="o">.</span><span class="n">folds</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><a class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame"><span class="n">cv_predictions</span></a><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cv_predictions</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>    index      target  repeat0_p0  repeat1_p0  repeat2_p0  repeat3_p0
@@ -601,13 +602,13 @@ Name: count, dtype: int64
 [100 rows x 6 columns]
 </pre></div>
 </div>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">inspector</span><span class="o">.</span><span class="n">folds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><a class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline"><span class="n">model</span></a>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">inspector</span><span class="o">.</span><span class="n">folds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">model</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;julearn.inspect._pipeline.PipelineInspector object at 0x7f2d52412660&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;julearn.inspect._pipeline.PipelineInspector object at 0x7fd3290d9fd0&gt;
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.227 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.220 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-02-inspection-run-binary-inspect-folds-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/7f7a2eaac0e31ab1ac030855137b6e21/run_binary_inspect_folds.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">run_binary_inspect_folds.ipynb</span></code></a></p>
@@ -667,7 +668,7 @@ Name: count, dtype: int64
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=6cf030bf"></script>
+</div><script src="../../_static/documentation_options.js?v=8af287f3"></script>
 <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
