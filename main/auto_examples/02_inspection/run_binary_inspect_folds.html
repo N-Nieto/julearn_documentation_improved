@@ -479,13 +479,13 @@ classification using a Support Vector Machine classifier.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">configure_logging</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s2">"INFO"</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:57,369 - julearn - INFO - ===== Lib Versions =====
-2026-07-27 16:35:57,369 - julearn - INFO - numpy: 2.5.1
-2026-07-27 16:35:57,369 - julearn - INFO - scipy: 1.18.0
-2026-07-27 16:35:57,369 - julearn - INFO - sklearn: 1.8.0
-2026-07-27 16:35:57,369 - julearn - INFO - pandas: 3.0.5
-2026-07-27 16:35:57,369 - julearn - INFO - julearn: 0.2.6.dev484
-2026-07-27 16:35:57,369 - julearn - INFO - ========================
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:55,725 - julearn - INFO - ===== Lib Versions =====
+2026-07-27 16:36:55,725 - julearn - INFO - numpy: 2.5.1
+2026-07-27 16:36:55,725 - julearn - INFO - scipy: 1.18.0
+2026-07-27 16:36:55,725 - julearn - INFO - sklearn: 1.8.0
+2026-07-27 16:36:55,726 - julearn - INFO - pandas: 3.0.5
+2026-07-27 16:36:55,726 - julearn - INFO - julearn: 0.2.6.dev480
+2026-07-27 16:36:55,726 - julearn - INFO - ========================
 </pre></div>
 </div>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df_iris</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"iris"</span><span class="p">)</span>
@@ -520,62 +520,62 @@ We will try to predict the species.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:35:57,371 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:35:57,372 - julearn - INFO - Step added
-2026-07-27 16:35:57,372 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:35:57,372 - julearn - INFO - Step added
-2026-07-27 16:35:57,372 - julearn - INFO - ==== Input Data ====
-2026-07-27 16:35:57,372 - julearn - INFO - Using dataframe as input
-2026-07-27 16:35:57,372 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-07-27 16:35:57,372 - julearn - INFO -      Target: species
-2026-07-27 16:35:57,372 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
-2026-07-27 16:35:57,372 - julearn - INFO -      X_types:{}
-2026-07-27 16:35:57,373 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
-/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:55,728 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:55,729 - julearn - INFO - Step added
+2026-07-27 16:36:55,729 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:36:55,729 - julearn - INFO - Step added
+2026-07-27 16:36:55,729 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:36:55,730 - julearn - INFO - Using dataframe as input
+2026-07-27 16:36:55,730 - julearn - INFO -      Features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:36:55,730 - julearn - INFO -      Target: species
+2026-07-27 16:36:55,730 - julearn - INFO -      Expanded features: ['sepal_length', 'sepal_width', 'petal_length']
+2026-07-27 16:36:55,730 - julearn - INFO -      X_types:{}
+2026-07-27 16:36:55,730 - julearn - WARNING - The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
+/tmp/tmpynqax7n0/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['sepal_length', 'sepal_width', 'petal_length']. They will be treated as continuous.
   warn_with_log(
-2026-07-27 16:35:57,373 - julearn - INFO - ====================
-2026-07-27 16:35:57,373 - julearn - INFO -
-2026-07-27 16:35:57,374 - julearn - INFO - = Model Parameters =
-2026-07-27 16:35:57,374 - julearn - INFO - ====================
-2026-07-27 16:35:57,374 - julearn - INFO -
-2026-07-27 16:35:57,374 - julearn - INFO - = Data Information =
-2026-07-27 16:35:57,374 - julearn - INFO -      Problem type: classification
-2026-07-27 16:35:57,374 - julearn - INFO -      Number of samples: 100
-2026-07-27 16:35:57,374 - julearn - INFO -      Number of features: 3
-2026-07-27 16:35:57,374 - julearn - INFO - ====================
-2026-07-27 16:35:57,374 - julearn - INFO -
-2026-07-27 16:35:57,375 - julearn - INFO -      Number of classes: 2
-2026-07-27 16:35:57,375 - julearn - INFO -      Target type: str
-2026-07-27 16:35:57,375 - julearn - INFO -      Class distributions: species
+2026-07-27 16:36:55,731 - julearn - INFO - ====================
+2026-07-27 16:36:55,731 - julearn - INFO -
+2026-07-27 16:36:55,732 - julearn - INFO - = Model Parameters =
+2026-07-27 16:36:55,732 - julearn - INFO - ====================
+2026-07-27 16:36:55,732 - julearn - INFO -
+2026-07-27 16:36:55,732 - julearn - INFO - = Data Information =
+2026-07-27 16:36:55,732 - julearn - INFO -      Problem type: classification
+2026-07-27 16:36:55,733 - julearn - INFO -      Number of samples: 100
+2026-07-27 16:36:55,733 - julearn - INFO -      Number of features: 3
+2026-07-27 16:36:55,733 - julearn - INFO - ====================
+2026-07-27 16:36:55,733 - julearn - INFO -
+2026-07-27 16:36:55,733 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:36:55,733 - julearn - INFO -      Target type: str
+2026-07-27 16:36:55,734 - julearn - INFO -      Class distributions: species
 versicolor    50
 virginica     50
 Name: count, dtype: int64
-2026-07-27 16:35:57,375 - julearn - INFO - Using outer CV scheme RepeatedStratifiedKFold(n_repeats=4, n_splits=5, random_state=200) (incl. final model)
-2026-07-27 16:35:57,376 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:36:55,735 - julearn - INFO - Using outer CV scheme RepeatedStratifiedKFold(n_repeats=4, n_splits=5, random_state=200) (incl. final model)
+2026-07-27 16:36:55,735 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmpynqax7n0/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-07-27 16:35:57,376 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:36:55,736 - julearn - INFO - Binary classification problem detected.
     fit_time  score_time  ... fold                          cv_mdsum
-0   0.003483    0.003260  ...    0  42489ff0163b2f12752440a6b7ef74c7
-1   0.003489    0.003268  ...    1  42489ff0163b2f12752440a6b7ef74c7
-2   0.003481    0.003300  ...    2  42489ff0163b2f12752440a6b7ef74c7
-3   0.003454    0.003253  ...    3  42489ff0163b2f12752440a6b7ef74c7
-4   0.003649    0.003312  ...    4  42489ff0163b2f12752440a6b7ef74c7
-5   0.003506    0.003300  ...    0  42489ff0163b2f12752440a6b7ef74c7
-6   0.003473    0.003261  ...    1  42489ff0163b2f12752440a6b7ef74c7
-7   0.003484    0.003275  ...    2  42489ff0163b2f12752440a6b7ef74c7
-8   0.003490    0.003265  ...    3  42489ff0163b2f12752440a6b7ef74c7
-9   0.003453    0.003254  ...    4  42489ff0163b2f12752440a6b7ef74c7
-10  0.003492    0.003272  ...    0  42489ff0163b2f12752440a6b7ef74c7
-11  0.003458    0.003277  ...    1  42489ff0163b2f12752440a6b7ef74c7
-12  0.003496    0.003300  ...    2  42489ff0163b2f12752440a6b7ef74c7
-13  0.003484    0.003286  ...    3  42489ff0163b2f12752440a6b7ef74c7
-14  0.003434    0.003556  ...    4  42489ff0163b2f12752440a6b7ef74c7
-15  0.003456    0.003252  ...    0  42489ff0163b2f12752440a6b7ef74c7
-16  0.003464    0.003288  ...    1  42489ff0163b2f12752440a6b7ef74c7
-17  0.003592    0.003345  ...    2  42489ff0163b2f12752440a6b7ef74c7
-18  0.003492    0.003261  ...    3  42489ff0163b2f12752440a6b7ef74c7
-19  0.003455    0.003289  ...    4  42489ff0163b2f12752440a6b7ef74c7
+0   0.005621    0.005200  ...    0  42489ff0163b2f12752440a6b7ef74c7
+1   0.005601    0.005178  ...    1  42489ff0163b2f12752440a6b7ef74c7
+2   0.005545    0.005180  ...    2  42489ff0163b2f12752440a6b7ef74c7
+3   0.005577    0.005183  ...    3  42489ff0163b2f12752440a6b7ef74c7
+4   0.005657    0.005168  ...    4  42489ff0163b2f12752440a6b7ef74c7
+5   0.005585    0.005243  ...    0  42489ff0163b2f12752440a6b7ef74c7
+6   0.005565    0.005195  ...    1  42489ff0163b2f12752440a6b7ef74c7
+7   0.005574    0.005235  ...    2  42489ff0163b2f12752440a6b7ef74c7
+8   0.005680    0.005210  ...    3  42489ff0163b2f12752440a6b7ef74c7
+9   0.005646    0.005273  ...    4  42489ff0163b2f12752440a6b7ef74c7
+10  0.005620    0.005182  ...    0  42489ff0163b2f12752440a6b7ef74c7
+11  0.005579    0.005164  ...    1  42489ff0163b2f12752440a6b7ef74c7
+12  0.005560    0.005132  ...    2  42489ff0163b2f12752440a6b7ef74c7
+13  0.005545    0.005223  ...    3  42489ff0163b2f12752440a6b7ef74c7
+14  0.005598    0.005389  ...    4  42489ff0163b2f12752440a6b7ef74c7
+15  0.005715    0.005214  ...    0  42489ff0163b2f12752440a6b7ef74c7
+16  0.005567    0.005162  ...    1  42489ff0163b2f12752440a6b7ef74c7
+17  0.005561    0.005214  ...    2  42489ff0163b2f12752440a6b7ef74c7
+18  0.005651    0.005257  ...    3  42489ff0163b2f12752440a6b7ef74c7
+19  0.005593    0.005202  ...    4  42489ff0163b2f12752440a6b7ef74c7
 
 [20 rows x 9 columns]
 </pre></div>
@@ -605,10 +605,10 @@ Name: count, dtype: int64
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">inspector</span><span class="o">.</span><span class="n">folds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">model</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;julearn.inspect._pipeline.PipelineInspector object at 0x7fd3290d9fd0&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;julearn.inspect._pipeline.PipelineInspector object at 0x7f0dc037dfd0&gt;
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.220 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.348 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-02-inspection-run-binary-inspect-folds-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/7f7a2eaac0e31ab1ac030855137b6e21/run_binary_inspect_folds.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">run_binary_inspect_folds.ipynb</span></code></a></p>
@@ -668,7 +668,7 @@ Name: count, dtype: int64
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=8af287f3"></script>
+</div><script src="../../_static/documentation_options.js?v=76839d54"></script>
 <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

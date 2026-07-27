@@ -68,13 +68,13 @@ Set the logging level to info to see extra information.
 
  .. code-block:: none
 
-    2026-07-27 16:36:17,287 - julearn - INFO - ===== Lib Versions =====
-    2026-07-27 16:36:17,287 - julearn - INFO - numpy: 2.5.1
-    2026-07-27 16:36:17,288 - julearn - INFO - scipy: 1.18.0
-    2026-07-27 16:36:17,288 - julearn - INFO - sklearn: 1.8.0
-    2026-07-27 16:36:17,288 - julearn - INFO - pandas: 3.0.5
-    2026-07-27 16:36:17,288 - julearn - INFO - julearn: 0.2.6.dev484
-    2026-07-27 16:36:17,288 - julearn - INFO - ========================
+    2026-07-27 16:37:24,148 - julearn - INFO - ===== Lib Versions =====
+    2026-07-27 16:37:24,149 - julearn - INFO - numpy: 2.5.1
+    2026-07-27 16:37:24,149 - julearn - INFO - scipy: 1.18.0
+    2026-07-27 16:37:24,149 - julearn - INFO - sklearn: 1.8.0
+    2026-07-27 16:37:24,149 - julearn - INFO - pandas: 3.0.5
+    2026-07-27 16:37:24,149 - julearn - INFO - julearn: 0.2.6.dev480
+    2026-07-27 16:37:24,149 - julearn - INFO - ========================
 
 
 
@@ -190,32 +190,32 @@ for scoring.
 
  .. code-block:: none
 
-    2026-07-27 16:36:17,299 - julearn - INFO - ==== Input Data ====
-    2026-07-27 16:36:17,299 - julearn - INFO - Using dataframe as input
-    2026-07-27 16:36:17,299 - julearn - INFO -      Features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
-    2026-07-27 16:36:17,299 - julearn - INFO -      Target: target
-    2026-07-27 16:36:17,300 - julearn - INFO -      Expanded features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
-    2026-07-27 16:36:17,300 - julearn - INFO -      X_types:{}
-    2026-07-27 16:36:17,300 - julearn - WARNING - The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
-    /tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
+    2026-07-27 16:37:24,165 - julearn - INFO - ==== Input Data ====
+    2026-07-27 16:37:24,165 - julearn - INFO - Using dataframe as input
+    2026-07-27 16:37:24,166 - julearn - INFO -      Features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
+    2026-07-27 16:37:24,166 - julearn - INFO -      Target: target
+    2026-07-27 16:37:24,166 - julearn - INFO -      Expanded features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
+    2026-07-27 16:37:24,166 - julearn - INFO -      X_types:{}
+    2026-07-27 16:37:24,166 - julearn - WARNING - The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
+    /tmp/tmpynqax7n0/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
       warn_with_log(
-    2026-07-27 16:36:17,301 - julearn - INFO - ====================
-    2026-07-27 16:36:17,301 - julearn - INFO - 
-    2026-07-27 16:36:17,301 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
-    2026-07-27 16:36:17,301 - julearn - INFO - Step added
-    2026-07-27 16:36:17,301 - julearn - INFO - Adding step ridge that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
-    2026-07-27 16:36:17,301 - julearn - INFO - Step added
-    2026-07-27 16:36:17,302 - julearn - INFO - = Model Parameters =
-    2026-07-27 16:36:17,302 - julearn - INFO - ====================
-    2026-07-27 16:36:17,302 - julearn - INFO - 
-    2026-07-27 16:36:17,302 - julearn - INFO - = Data Information =
-    2026-07-27 16:36:17,302 - julearn - INFO -      Problem type: regression
-    2026-07-27 16:36:17,302 - julearn - INFO -      Number of samples: 442
-    2026-07-27 16:36:17,302 - julearn - INFO -      Number of features: 10
-    2026-07-27 16:36:17,302 - julearn - INFO - ====================
-    2026-07-27 16:36:17,302 - julearn - INFO - 
-    2026-07-27 16:36:17,302 - julearn - INFO -      Target type: float64
-    2026-07-27 16:36:17,302 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
+    2026-07-27 16:37:24,167 - julearn - INFO - ====================
+    2026-07-27 16:37:24,168 - julearn - INFO - 
+    2026-07-27 16:37:24,168 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
+    2026-07-27 16:37:24,168 - julearn - INFO - Step added
+    2026-07-27 16:37:24,168 - julearn - INFO - Adding step ridge that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
+    2026-07-27 16:37:24,168 - julearn - INFO - Step added
+    2026-07-27 16:37:24,169 - julearn - INFO - = Model Parameters =
+    2026-07-27 16:37:24,169 - julearn - INFO - ====================
+    2026-07-27 16:37:24,169 - julearn - INFO - 
+    2026-07-27 16:37:24,169 - julearn - INFO - = Data Information =
+    2026-07-27 16:37:24,169 - julearn - INFO -      Problem type: regression
+    2026-07-27 16:37:24,169 - julearn - INFO -      Number of samples: 442
+    2026-07-27 16:37:24,170 - julearn - INFO -      Number of features: 10
+    2026-07-27 16:37:24,170 - julearn - INFO - ====================
+    2026-07-27 16:37:24,170 - julearn - INFO - 
+    2026-07-27 16:37:24,170 - julearn - INFO -      Target type: float64
+    2026-07-27 16:37:24,170 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
 
 
 
@@ -269,8 +269,8 @@ The scores dataframe has all the values for each CV split.
       <tbody>
         <tr>
           <th>0</th>
-          <td>0.003232</td>
-          <td>0.001754</td>
+          <td>0.005013</td>
+          <td>0.002676</td>
           <td>-43.104359</td>
           <td>353</td>
           <td>89</td>
@@ -280,8 +280,8 @@ The scores dataframe has all the values for each CV split.
         </tr>
         <tr>
           <th>1</th>
-          <td>0.003186</td>
-          <td>0.001702</td>
+          <td>0.004943</td>
+          <td>0.002668</td>
           <td>-44.861364</td>
           <td>353</td>
           <td>89</td>
@@ -291,8 +291,8 @@ The scores dataframe has all the values for each CV split.
         </tr>
         <tr>
           <th>2</th>
-          <td>0.003181</td>
-          <td>0.001730</td>
+          <td>0.004913</td>
+          <td>0.002691</td>
           <td>-47.981407</td>
           <td>354</td>
           <td>88</td>
@@ -302,8 +302,8 @@ The scores dataframe has all the values for each CV split.
         </tr>
         <tr>
           <th>3</th>
-          <td>0.003175</td>
-          <td>0.001721</td>
+          <td>0.004905</td>
+          <td>0.002675</td>
           <td>-42.956254</td>
           <td>354</td>
           <td>88</td>
@@ -313,8 +313,8 @@ The scores dataframe has all the values for each CV split.
         </tr>
         <tr>
           <th>4</th>
-          <td>0.003198</td>
-          <td>0.001745</td>
+          <td>0.004918</td>
+          <td>0.002688</td>
           <td>-42.419886</td>
           <td>354</td>
           <td>88</td>
@@ -380,32 +380,32 @@ correlation coefficient (squared) as scoring functions.
 
  .. code-block:: none
 
-    2026-07-27 16:36:17,338 - julearn - INFO - ==== Input Data ====
-    2026-07-27 16:36:17,339 - julearn - INFO - Using dataframe as input
-    2026-07-27 16:36:17,339 - julearn - INFO -      Features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
-    2026-07-27 16:36:17,339 - julearn - INFO -      Target: target
-    2026-07-27 16:36:17,339 - julearn - INFO -      Expanded features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
-    2026-07-27 16:36:17,339 - julearn - INFO -      X_types:{}
-    2026-07-27 16:36:17,339 - julearn - WARNING - The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
-    /tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
+    2026-07-27 16:37:24,224 - julearn - INFO - ==== Input Data ====
+    2026-07-27 16:37:24,224 - julearn - INFO - Using dataframe as input
+    2026-07-27 16:37:24,224 - julearn - INFO -      Features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
+    2026-07-27 16:37:24,224 - julearn - INFO -      Target: target
+    2026-07-27 16:37:24,225 - julearn - INFO -      Expanded features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
+    2026-07-27 16:37:24,225 - julearn - INFO -      X_types:{}
+    2026-07-27 16:37:24,225 - julearn - WARNING - The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
+    /tmp/tmpynqax7n0/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
       warn_with_log(
-    2026-07-27 16:36:17,340 - julearn - INFO - ====================
-    2026-07-27 16:36:17,340 - julearn - INFO - 
-    2026-07-27 16:36:17,340 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
-    2026-07-27 16:36:17,340 - julearn - INFO - Step added
-    2026-07-27 16:36:17,340 - julearn - INFO - Adding step ridge that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
-    2026-07-27 16:36:17,340 - julearn - INFO - Step added
-    2026-07-27 16:36:17,341 - julearn - INFO - = Model Parameters =
-    2026-07-27 16:36:17,341 - julearn - INFO - ====================
-    2026-07-27 16:36:17,341 - julearn - INFO - 
-    2026-07-27 16:36:17,341 - julearn - INFO - = Data Information =
-    2026-07-27 16:36:17,341 - julearn - INFO -      Problem type: regression
-    2026-07-27 16:36:17,341 - julearn - INFO -      Number of samples: 442
-    2026-07-27 16:36:17,341 - julearn - INFO -      Number of features: 10
-    2026-07-27 16:36:17,341 - julearn - INFO - ====================
-    2026-07-27 16:36:17,341 - julearn - INFO - 
-    2026-07-27 16:36:17,341 - julearn - INFO -      Target type: float64
-    2026-07-27 16:36:17,341 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
+    2026-07-27 16:37:24,226 - julearn - INFO - ====================
+    2026-07-27 16:37:24,226 - julearn - INFO - 
+    2026-07-27 16:37:24,226 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
+    2026-07-27 16:37:24,227 - julearn - INFO - Step added
+    2026-07-27 16:37:24,227 - julearn - INFO - Adding step ridge that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
+    2026-07-27 16:37:24,227 - julearn - INFO - Step added
+    2026-07-27 16:37:24,227 - julearn - INFO - = Model Parameters =
+    2026-07-27 16:37:24,228 - julearn - INFO - ====================
+    2026-07-27 16:37:24,228 - julearn - INFO - 
+    2026-07-27 16:37:24,228 - julearn - INFO - = Data Information =
+    2026-07-27 16:37:24,228 - julearn - INFO -      Problem type: regression
+    2026-07-27 16:37:24,228 - julearn - INFO -      Number of samples: 442
+    2026-07-27 16:37:24,228 - julearn - INFO -      Number of features: 10
+    2026-07-27 16:37:24,228 - julearn - INFO - ====================
+    2026-07-27 16:37:24,228 - julearn - INFO - 
+    2026-07-27 16:37:24,229 - julearn - INFO -      Target type: float64
+    2026-07-27 16:37:24,229 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
 
 
 
@@ -480,7 +480,7 @@ with ``julearn``.
 
  .. code-block:: none
 
-    2026-07-27 16:36:17,377 - julearn - INFO - registering scorer named pearsonr
+    2026-07-27 16:37:24,286 - julearn - INFO - registering scorer named pearsonr
 
 
 
@@ -511,32 +511,32 @@ Now we can use it as another scoring metric.
 
  .. code-block:: none
 
-    2026-07-27 16:36:17,377 - julearn - INFO - ==== Input Data ====
-    2026-07-27 16:36:17,378 - julearn - INFO - Using dataframe as input
-    2026-07-27 16:36:17,378 - julearn - INFO -      Features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
-    2026-07-27 16:36:17,378 - julearn - INFO -      Target: target
-    2026-07-27 16:36:17,378 - julearn - INFO -      Expanded features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
-    2026-07-27 16:36:17,378 - julearn - INFO -      X_types:{}
-    2026-07-27 16:36:17,378 - julearn - WARNING - The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
-    /tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
+    2026-07-27 16:37:24,287 - julearn - INFO - ==== Input Data ====
+    2026-07-27 16:37:24,287 - julearn - INFO - Using dataframe as input
+    2026-07-27 16:37:24,287 - julearn - INFO -      Features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
+    2026-07-27 16:37:24,287 - julearn - INFO -      Target: target
+    2026-07-27 16:37:24,288 - julearn - INFO -      Expanded features: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
+    2026-07-27 16:37:24,288 - julearn - INFO -      X_types:{}
+    2026-07-27 16:37:24,288 - julearn - WARNING - The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
+    /tmp/tmpynqax7n0/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']. They will be treated as continuous.
       warn_with_log(
-    2026-07-27 16:36:17,379 - julearn - INFO - ====================
-    2026-07-27 16:36:17,379 - julearn - INFO - 
-    2026-07-27 16:36:17,379 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
-    2026-07-27 16:36:17,379 - julearn - INFO - Step added
-    2026-07-27 16:36:17,379 - julearn - INFO - Adding step ridge that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
-    2026-07-27 16:36:17,379 - julearn - INFO - Step added
-    2026-07-27 16:36:17,380 - julearn - INFO - = Model Parameters =
-    2026-07-27 16:36:17,380 - julearn - INFO - ====================
-    2026-07-27 16:36:17,380 - julearn - INFO - 
-    2026-07-27 16:36:17,380 - julearn - INFO - = Data Information =
-    2026-07-27 16:36:17,380 - julearn - INFO -      Problem type: regression
-    2026-07-27 16:36:17,380 - julearn - INFO -      Number of samples: 442
-    2026-07-27 16:36:17,380 - julearn - INFO -      Number of features: 10
-    2026-07-27 16:36:17,380 - julearn - INFO - ====================
-    2026-07-27 16:36:17,380 - julearn - INFO - 
-    2026-07-27 16:36:17,380 - julearn - INFO -      Target type: float64
-    2026-07-27 16:36:17,380 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
+    2026-07-27 16:37:24,289 - julearn - INFO - ====================
+    2026-07-27 16:37:24,289 - julearn - INFO - 
+    2026-07-27 16:37:24,289 - julearn - INFO - Adding step zscore that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
+    2026-07-27 16:37:24,290 - julearn - INFO - Step added
+    2026-07-27 16:37:24,290 - julearn - INFO - Adding step ridge that applies to ColumnTypes<types={'continuous'}; pattern=(?:__:type:__continuous)>
+    2026-07-27 16:37:24,290 - julearn - INFO - Step added
+    2026-07-27 16:37:24,290 - julearn - INFO - = Model Parameters =
+    2026-07-27 16:37:24,291 - julearn - INFO - ====================
+    2026-07-27 16:37:24,291 - julearn - INFO - 
+    2026-07-27 16:37:24,291 - julearn - INFO - = Data Information =
+    2026-07-27 16:37:24,291 - julearn - INFO -      Problem type: regression
+    2026-07-27 16:37:24,291 - julearn - INFO -      Number of samples: 442
+    2026-07-27 16:37:24,291 - julearn - INFO -      Number of features: 10
+    2026-07-27 16:37:24,291 - julearn - INFO - ====================
+    2026-07-27 16:37:24,292 - julearn - INFO - 
+    2026-07-27 16:37:24,292 - julearn - INFO -      Target type: float64
+    2026-07-27 16:37:24,292 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
 
 
 
@@ -544,7 +544,7 @@ Now we can use it as another scoring metric.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.133 seconds)
+   **Total running time of the script:** (0 minutes 0.205 seconds)
 
 
 .. _sphx_glr_download_auto_examples_05_customization_run_custom_scorers_regression.py:

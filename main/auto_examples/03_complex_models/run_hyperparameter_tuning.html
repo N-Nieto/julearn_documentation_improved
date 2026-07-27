@@ -483,13 +483,13 @@ cognitive control in context-dependent decision-making. Cerebral Cortex.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">configure_logging</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s2">"INFO"</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:09,037 - julearn - INFO - ===== Lib Versions =====
-2026-07-27 16:36:09,037 - julearn - INFO - numpy: 2.5.1
-2026-07-27 16:36:09,037 - julearn - INFO - scipy: 1.18.0
-2026-07-27 16:36:09,037 - julearn - INFO - sklearn: 1.8.0
-2026-07-27 16:36:09,037 - julearn - INFO - pandas: 3.0.5
-2026-07-27 16:36:09,038 - julearn - INFO - julearn: 0.2.6.dev484
-2026-07-27 16:36:09,038 - julearn - INFO - ========================
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:37:11,996 - julearn - INFO - ===== Lib Versions =====
+2026-07-27 16:37:11,996 - julearn - INFO - numpy: 2.5.1
+2026-07-27 16:37:11,996 - julearn - INFO - scipy: 1.18.0
+2026-07-27 16:37:11,996 - julearn - INFO - sklearn: 1.8.0
+2026-07-27 16:37:11,997 - julearn - INFO - pandas: 3.0.5
+2026-07-27 16:37:11,997 - julearn - INFO - julearn: 0.2.6.dev480
+2026-07-27 16:37:11,997 - julearn - INFO - ========================
 </pre></div>
 </div>
 <p>Set the random seed to always have the same example.</p>
@@ -667,42 +667,42 @@ cognitive control in context-dependent decision-making. Cerebral Cortex.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:09,044 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:36:09,044 - julearn - INFO - Step added
-2026-07-27 16:36:09,044 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:36:09,045 - julearn - INFO - Setting hyperparameter kernel = linear
-2026-07-27 16:36:09,045 - julearn - INFO - Step added
-2026-07-27 16:36:09,045 - julearn - INFO - ==== Input Data ====
-2026-07-27 16:36:09,045 - julearn - INFO - Using dataframe as input
-2026-07-27 16:36:09,045 - julearn - INFO -      Features: ['frontal', 'parietal']
-2026-07-27 16:36:09,045 - julearn - INFO -      Target: event
-2026-07-27 16:36:09,045 - julearn - INFO -      Expanded features: ['frontal', 'parietal']
-2026-07-27 16:36:09,045 - julearn - INFO -      X_types:{}
-2026-07-27 16:36:09,045 - julearn - WARNING - The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
-/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:37:12,006 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:37:12,006 - julearn - INFO - Step added
+2026-07-27 16:37:12,006 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:37:12,006 - julearn - INFO - Setting hyperparameter kernel = linear
+2026-07-27 16:37:12,007 - julearn - INFO - Step added
+2026-07-27 16:37:12,007 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:37:12,007 - julearn - INFO - Using dataframe as input
+2026-07-27 16:37:12,007 - julearn - INFO -      Features: ['frontal', 'parietal']
+2026-07-27 16:37:12,007 - julearn - INFO -      Target: event
+2026-07-27 16:37:12,007 - julearn - INFO -      Expanded features: ['frontal', 'parietal']
+2026-07-27 16:37:12,008 - julearn - INFO -      X_types:{}
+2026-07-27 16:37:12,008 - julearn - WARNING - The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
+/tmp/tmpynqax7n0/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
   warn_with_log(
-2026-07-27 16:36:09,046 - julearn - INFO - ====================
-2026-07-27 16:36:09,046 - julearn - INFO -
-2026-07-27 16:36:09,046 - julearn - INFO - = Model Parameters =
-2026-07-27 16:36:09,046 - julearn - INFO - ====================
-2026-07-27 16:36:09,046 - julearn - INFO -
-2026-07-27 16:36:09,047 - julearn - INFO - = Data Information =
-2026-07-27 16:36:09,047 - julearn - INFO -      Problem type: classification
-2026-07-27 16:36:09,047 - julearn - INFO -      Number of samples: 532
-2026-07-27 16:36:09,047 - julearn - INFO -      Number of features: 2
-2026-07-27 16:36:09,047 - julearn - INFO - ====================
-2026-07-27 16:36:09,047 - julearn - INFO -
-2026-07-27 16:36:09,047 - julearn - INFO -      Number of classes: 2
-2026-07-27 16:36:09,047 - julearn - INFO -      Target type: str
-2026-07-27 16:36:09,048 - julearn - INFO -      Class distributions: event
+2026-07-27 16:37:12,009 - julearn - INFO - ====================
+2026-07-27 16:37:12,009 - julearn - INFO -
+2026-07-27 16:37:12,009 - julearn - INFO - = Model Parameters =
+2026-07-27 16:37:12,009 - julearn - INFO - ====================
+2026-07-27 16:37:12,009 - julearn - INFO -
+2026-07-27 16:37:12,010 - julearn - INFO - = Data Information =
+2026-07-27 16:37:12,010 - julearn - INFO -      Problem type: classification
+2026-07-27 16:37:12,010 - julearn - INFO -      Number of samples: 532
+2026-07-27 16:37:12,010 - julearn - INFO -      Number of features: 2
+2026-07-27 16:37:12,010 - julearn - INFO - ====================
+2026-07-27 16:37:12,010 - julearn - INFO -
+2026-07-27 16:37:12,011 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:37:12,011 - julearn - INFO -      Target type: str
+2026-07-27 16:37:12,011 - julearn - INFO -      Class distributions: event
 cue     266
 stim    266
 Name: count, dtype: int64
-2026-07-27 16:36:09,048 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
-2026-07-27 16:36:09,049 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:37:12,013 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False)
+2026-07-27 16:37:12,013 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmpynqax7n0/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-07-27 16:36:09,049 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:37:12,014 - julearn - INFO - Binary classification problem detected.
 0.5939164168576971
 </pre></div>
 </div>
@@ -730,49 +730,49 @@ We will use a grid search to find the best <code class="docutils literal notrans
 <span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:09,092 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:36:09,093 - julearn - INFO - Step added
-2026-07-27 16:36:09,093 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:36:09,093 - julearn - INFO - Setting hyperparameter kernel = linear
-2026-07-27 16:36:09,093 - julearn - INFO - Tuning hyperparameter C = [0.01, 0.1]
-2026-07-27 16:36:09,093 - julearn - INFO - Step added
-2026-07-27 16:36:09,093 - julearn - INFO - ==== Input Data ====
-2026-07-27 16:36:09,093 - julearn - INFO - Using dataframe as input
-2026-07-27 16:36:09,093 - julearn - INFO -      Features: ['frontal', 'parietal']
-2026-07-27 16:36:09,093 - julearn - INFO -      Target: event
-2026-07-27 16:36:09,093 - julearn - INFO -      Expanded features: ['frontal', 'parietal']
-2026-07-27 16:36:09,094 - julearn - INFO -      X_types:{}
-2026-07-27 16:36:09,094 - julearn - WARNING - The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
-/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:37:12,080 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:37:12,080 - julearn - INFO - Step added
+2026-07-27 16:37:12,080 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:37:12,080 - julearn - INFO - Setting hyperparameter kernel = linear
+2026-07-27 16:37:12,081 - julearn - INFO - Tuning hyperparameter C = [0.01, 0.1]
+2026-07-27 16:37:12,081 - julearn - INFO - Step added
+2026-07-27 16:37:12,081 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:37:12,081 - julearn - INFO - Using dataframe as input
+2026-07-27 16:37:12,081 - julearn - INFO -      Features: ['frontal', 'parietal']
+2026-07-27 16:37:12,081 - julearn - INFO -      Target: event
+2026-07-27 16:37:12,082 - julearn - INFO -      Expanded features: ['frontal', 'parietal']
+2026-07-27 16:37:12,082 - julearn - INFO -      X_types:{}
+2026-07-27 16:37:12,082 - julearn - WARNING - The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
+/tmp/tmpynqax7n0/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
   warn_with_log(
-2026-07-27 16:36:09,094 - julearn - INFO - ====================
-2026-07-27 16:36:09,094 - julearn - INFO -
-2026-07-27 16:36:09,095 - julearn - INFO - = Model Parameters =
-2026-07-27 16:36:09,095 - julearn - INFO - Tuning hyperparameters using grid
-2026-07-27 16:36:09,095 - julearn - INFO - Hyperparameters:
-2026-07-27 16:36:09,095 - julearn - INFO -      svm__C: [0.01, 0.1]
-2026-07-27 16:36:09,095 - julearn - INFO - Using inner CV scheme KFold(n_splits=2, random_state=None, shuffle=False)
-2026-07-27 16:36:09,095 - julearn - INFO - Search Parameters:
-2026-07-27 16:36:09,095 - julearn - INFO -      cv: KFold(n_splits=2, random_state=None, shuffle=False)
-2026-07-27 16:36:09,096 - julearn - INFO - ====================
-2026-07-27 16:36:09,096 - julearn - INFO -
-2026-07-27 16:36:09,096 - julearn - INFO - = Data Information =
-2026-07-27 16:36:09,096 - julearn - INFO -      Problem type: classification
-2026-07-27 16:36:09,096 - julearn - INFO -      Number of samples: 532
-2026-07-27 16:36:09,096 - julearn - INFO -      Number of features: 2
-2026-07-27 16:36:09,096 - julearn - INFO - ====================
-2026-07-27 16:36:09,096 - julearn - INFO -
-2026-07-27 16:36:09,096 - julearn - INFO -      Number of classes: 2
-2026-07-27 16:36:09,096 - julearn - INFO -      Target type: str
-2026-07-27 16:36:09,097 - julearn - INFO -      Class distributions: event
+2026-07-27 16:37:12,083 - julearn - INFO - ====================
+2026-07-27 16:37:12,083 - julearn - INFO -
+2026-07-27 16:37:12,083 - julearn - INFO - = Model Parameters =
+2026-07-27 16:37:12,084 - julearn - INFO - Tuning hyperparameters using grid
+2026-07-27 16:37:12,084 - julearn - INFO - Hyperparameters:
+2026-07-27 16:37:12,084 - julearn - INFO -      svm__C: [0.01, 0.1]
+2026-07-27 16:37:12,084 - julearn - INFO - Using inner CV scheme KFold(n_splits=2, random_state=None, shuffle=False)
+2026-07-27 16:37:12,085 - julearn - INFO - Search Parameters:
+2026-07-27 16:37:12,085 - julearn - INFO -      cv: KFold(n_splits=2, random_state=None, shuffle=False)
+2026-07-27 16:37:12,085 - julearn - INFO - ====================
+2026-07-27 16:37:12,085 - julearn - INFO -
+2026-07-27 16:37:12,085 - julearn - INFO - = Data Information =
+2026-07-27 16:37:12,086 - julearn - INFO -      Problem type: classification
+2026-07-27 16:37:12,086 - julearn - INFO -      Number of samples: 532
+2026-07-27 16:37:12,086 - julearn - INFO -      Number of features: 2
+2026-07-27 16:37:12,086 - julearn - INFO - ====================
+2026-07-27 16:37:12,086 - julearn - INFO -
+2026-07-27 16:37:12,086 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:37:12,087 - julearn - INFO -      Target type: str
+2026-07-27 16:37:12,087 - julearn - INFO -      Class distributions: event
 cue     266
 stim    266
 Name: count, dtype: int64
-2026-07-27 16:36:09,097 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
-2026-07-27 16:36:09,098 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:37:12,088 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
+2026-07-27 16:37:12,089 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmpynqax7n0/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-07-27 16:36:09,098 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:37:12,089 - julearn - INFO - Binary classification problem detected.
 0.588308940222183
 </pre></div>
 </div>
@@ -793,50 +793,50 @@ Name: count, dtype: int64
 <span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:09,315 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:36:09,316 - julearn - INFO - Step added
-2026-07-27 16:36:09,316 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:36:09,316 - julearn - INFO - Tuning hyperparameter kernel = ['linear', 'rbf', 'poly']
-2026-07-27 16:36:09,316 - julearn - INFO - Tuning hyperparameter C = [0.01, 0.1]
-2026-07-27 16:36:09,316 - julearn - INFO - Step added
-2026-07-27 16:36:09,316 - julearn - INFO - ==== Input Data ====
-2026-07-27 16:36:09,316 - julearn - INFO - Using dataframe as input
-2026-07-27 16:36:09,316 - julearn - INFO -      Features: ['frontal', 'parietal']
-2026-07-27 16:36:09,316 - julearn - INFO -      Target: event
-2026-07-27 16:36:09,316 - julearn - INFO -      Expanded features: ['frontal', 'parietal']
-2026-07-27 16:36:09,316 - julearn - INFO -      X_types:{}
-2026-07-27 16:36:09,317 - julearn - WARNING - The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
-/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:37:12,419 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:37:12,420 - julearn - INFO - Step added
+2026-07-27 16:37:12,420 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:37:12,420 - julearn - INFO - Tuning hyperparameter kernel = ['linear', 'rbf', 'poly']
+2026-07-27 16:37:12,420 - julearn - INFO - Tuning hyperparameter C = [0.01, 0.1]
+2026-07-27 16:37:12,420 - julearn - INFO - Step added
+2026-07-27 16:37:12,421 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:37:12,421 - julearn - INFO - Using dataframe as input
+2026-07-27 16:37:12,421 - julearn - INFO -      Features: ['frontal', 'parietal']
+2026-07-27 16:37:12,421 - julearn - INFO -      Target: event
+2026-07-27 16:37:12,421 - julearn - INFO -      Expanded features: ['frontal', 'parietal']
+2026-07-27 16:37:12,421 - julearn - INFO -      X_types:{}
+2026-07-27 16:37:12,421 - julearn - WARNING - The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
+/tmp/tmpynqax7n0/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
   warn_with_log(
-2026-07-27 16:36:09,317 - julearn - INFO - ====================
-2026-07-27 16:36:09,317 - julearn - INFO -
-2026-07-27 16:36:09,318 - julearn - INFO - = Model Parameters =
-2026-07-27 16:36:09,318 - julearn - INFO - Tuning hyperparameters using grid
-2026-07-27 16:36:09,318 - julearn - INFO - Hyperparameters:
-2026-07-27 16:36:09,318 - julearn - INFO -      svm__kernel: ['linear', 'rbf', 'poly']
-2026-07-27 16:36:09,318 - julearn - INFO -      svm__C: [0.01, 0.1]
-2026-07-27 16:36:09,318 - julearn - INFO - Using inner CV scheme KFold(n_splits=2, random_state=None, shuffle=False)
-2026-07-27 16:36:09,318 - julearn - INFO - Search Parameters:
-2026-07-27 16:36:09,318 - julearn - INFO -      cv: KFold(n_splits=2, random_state=None, shuffle=False)
-2026-07-27 16:36:09,319 - julearn - INFO - ====================
-2026-07-27 16:36:09,319 - julearn - INFO -
-2026-07-27 16:36:09,319 - julearn - INFO - = Data Information =
-2026-07-27 16:36:09,319 - julearn - INFO -      Problem type: classification
-2026-07-27 16:36:09,319 - julearn - INFO -      Number of samples: 532
-2026-07-27 16:36:09,319 - julearn - INFO -      Number of features: 2
-2026-07-27 16:36:09,319 - julearn - INFO - ====================
-2026-07-27 16:36:09,319 - julearn - INFO -
-2026-07-27 16:36:09,319 - julearn - INFO -      Number of classes: 2
-2026-07-27 16:36:09,319 - julearn - INFO -      Target type: str
-2026-07-27 16:36:09,320 - julearn - INFO -      Class distributions: event
+2026-07-27 16:37:12,422 - julearn - INFO - ====================
+2026-07-27 16:37:12,423 - julearn - INFO -
+2026-07-27 16:37:12,423 - julearn - INFO - = Model Parameters =
+2026-07-27 16:37:12,423 - julearn - INFO - Tuning hyperparameters using grid
+2026-07-27 16:37:12,423 - julearn - INFO - Hyperparameters:
+2026-07-27 16:37:12,423 - julearn - INFO -      svm__kernel: ['linear', 'rbf', 'poly']
+2026-07-27 16:37:12,424 - julearn - INFO -      svm__C: [0.01, 0.1]
+2026-07-27 16:37:12,424 - julearn - INFO - Using inner CV scheme KFold(n_splits=2, random_state=None, shuffle=False)
+2026-07-27 16:37:12,424 - julearn - INFO - Search Parameters:
+2026-07-27 16:37:12,424 - julearn - INFO -      cv: KFold(n_splits=2, random_state=None, shuffle=False)
+2026-07-27 16:37:12,425 - julearn - INFO - ====================
+2026-07-27 16:37:12,425 - julearn - INFO -
+2026-07-27 16:37:12,425 - julearn - INFO - = Data Information =
+2026-07-27 16:37:12,425 - julearn - INFO -      Problem type: classification
+2026-07-27 16:37:12,425 - julearn - INFO -      Number of samples: 532
+2026-07-27 16:37:12,425 - julearn - INFO -      Number of features: 2
+2026-07-27 16:37:12,426 - julearn - INFO - ====================
+2026-07-27 16:37:12,426 - julearn - INFO -
+2026-07-27 16:37:12,426 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:37:12,426 - julearn - INFO -      Target type: str
+2026-07-27 16:37:12,427 - julearn - INFO -      Class distributions: event
 cue     266
 stim    266
 Name: count, dtype: int64
-2026-07-27 16:36:09,320 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
-2026-07-27 16:36:09,321 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:37:12,428 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
+2026-07-27 16:37:12,428 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmpynqax7n0/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-07-27 16:36:09,321 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:37:12,429 - julearn - INFO - Binary classification problem detected.
 0.7087109857168048
 </pre></div>
 </div>
@@ -866,51 +866,51 @@ parameters.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:09,880 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:36:09,880 - julearn - INFO - Step added
-2026-07-27 16:36:09,881 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:36:09,881 - julearn - INFO - Setting hyperparameter kernel = rbf
-2026-07-27 16:36:09,881 - julearn - INFO - Tuning hyperparameter C = [0.01, 0.1]
-2026-07-27 16:36:09,881 - julearn - INFO - Tuning hyperparameter gamma = [0.01, 0.001]
-2026-07-27 16:36:09,881 - julearn - INFO - Step added
-2026-07-27 16:36:09,881 - julearn - INFO - ==== Input Data ====
-2026-07-27 16:36:09,881 - julearn - INFO - Using dataframe as input
-2026-07-27 16:36:09,881 - julearn - INFO -      Features: ['frontal', 'parietal']
-2026-07-27 16:36:09,881 - julearn - INFO -      Target: event
-2026-07-27 16:36:09,881 - julearn - INFO -      Expanded features: ['frontal', 'parietal']
-2026-07-27 16:36:09,881 - julearn - INFO -      X_types:{}
-2026-07-27 16:36:09,881 - julearn - WARNING - The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
-/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:37:13,297 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:37:13,297 - julearn - INFO - Step added
+2026-07-27 16:37:13,297 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:37:13,297 - julearn - INFO - Setting hyperparameter kernel = rbf
+2026-07-27 16:37:13,297 - julearn - INFO - Tuning hyperparameter C = [0.01, 0.1]
+2026-07-27 16:37:13,298 - julearn - INFO - Tuning hyperparameter gamma = [0.01, 0.001]
+2026-07-27 16:37:13,298 - julearn - INFO - Step added
+2026-07-27 16:37:13,298 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:37:13,298 - julearn - INFO - Using dataframe as input
+2026-07-27 16:37:13,298 - julearn - INFO -      Features: ['frontal', 'parietal']
+2026-07-27 16:37:13,298 - julearn - INFO -      Target: event
+2026-07-27 16:37:13,299 - julearn - INFO -      Expanded features: ['frontal', 'parietal']
+2026-07-27 16:37:13,299 - julearn - INFO -      X_types:{}
+2026-07-27 16:37:13,299 - julearn - WARNING - The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
+/tmp/tmpynqax7n0/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
   warn_with_log(
-2026-07-27 16:36:09,882 - julearn - INFO - ====================
-2026-07-27 16:36:09,882 - julearn - INFO -
-2026-07-27 16:36:09,883 - julearn - INFO - = Model Parameters =
-2026-07-27 16:36:09,883 - julearn - INFO - Tuning hyperparameters using grid
-2026-07-27 16:36:09,883 - julearn - INFO - Hyperparameters:
-2026-07-27 16:36:09,883 - julearn - INFO -      svm__C: [0.01, 0.1]
-2026-07-27 16:36:09,883 - julearn - INFO -      svm__gamma: [0.01, 0.001]
-2026-07-27 16:36:09,883 - julearn - INFO - Using inner CV scheme KFold(n_splits=2, random_state=None, shuffle=False)
-2026-07-27 16:36:09,883 - julearn - INFO - Search Parameters:
-2026-07-27 16:36:09,883 - julearn - INFO -      cv: KFold(n_splits=2, random_state=None, shuffle=False)
-2026-07-27 16:36:09,884 - julearn - INFO - ====================
-2026-07-27 16:36:09,884 - julearn - INFO -
-2026-07-27 16:36:09,884 - julearn - INFO - = Data Information =
-2026-07-27 16:36:09,884 - julearn - INFO -      Problem type: classification
-2026-07-27 16:36:09,884 - julearn - INFO -      Number of samples: 532
-2026-07-27 16:36:09,884 - julearn - INFO -      Number of features: 2
-2026-07-27 16:36:09,884 - julearn - INFO - ====================
-2026-07-27 16:36:09,884 - julearn - INFO -
-2026-07-27 16:36:09,884 - julearn - INFO -      Number of classes: 2
-2026-07-27 16:36:09,884 - julearn - INFO -      Target type: str
-2026-07-27 16:36:09,885 - julearn - INFO -      Class distributions: event
+2026-07-27 16:37:13,300 - julearn - INFO - ====================
+2026-07-27 16:37:13,300 - julearn - INFO -
+2026-07-27 16:37:13,300 - julearn - INFO - = Model Parameters =
+2026-07-27 16:37:13,301 - julearn - INFO - Tuning hyperparameters using grid
+2026-07-27 16:37:13,301 - julearn - INFO - Hyperparameters:
+2026-07-27 16:37:13,301 - julearn - INFO -      svm__C: [0.01, 0.1]
+2026-07-27 16:37:13,301 - julearn - INFO -      svm__gamma: [0.01, 0.001]
+2026-07-27 16:37:13,301 - julearn - INFO - Using inner CV scheme KFold(n_splits=2, random_state=None, shuffle=False)
+2026-07-27 16:37:13,302 - julearn - INFO - Search Parameters:
+2026-07-27 16:37:13,302 - julearn - INFO -      cv: KFold(n_splits=2, random_state=None, shuffle=False)
+2026-07-27 16:37:13,302 - julearn - INFO - ====================
+2026-07-27 16:37:13,302 - julearn - INFO -
+2026-07-27 16:37:13,302 - julearn - INFO - = Data Information =
+2026-07-27 16:37:13,303 - julearn - INFO -      Problem type: classification
+2026-07-27 16:37:13,303 - julearn - INFO -      Number of samples: 532
+2026-07-27 16:37:13,303 - julearn - INFO -      Number of features: 2
+2026-07-27 16:37:13,303 - julearn - INFO - ====================
+2026-07-27 16:37:13,303 - julearn - INFO -
+2026-07-27 16:37:13,304 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:37:13,304 - julearn - INFO -      Target type: str
+2026-07-27 16:37:13,304 - julearn - INFO -      Class distributions: event
 cue     266
 stim    266
 Name: count, dtype: int64
-2026-07-27 16:36:09,886 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
-2026-07-27 16:36:09,886 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:37:13,305 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
+2026-07-27 16:37:13,306 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmpynqax7n0/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-07-27 16:36:09,886 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:37:13,306 - julearn - INFO - Binary classification problem detected.
 0.5188855581026275
 {'svm__C': 0.01, 'svm__gamma': 0.001}
 </pre></div>
@@ -938,51 +938,51 @@ Let’s add the default value and see what happens.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:36:10,312 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:36:10,312 - julearn - INFO - Step added
-2026-07-27 16:36:10,312 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
-2026-07-27 16:36:10,312 - julearn - INFO - Setting hyperparameter kernel = rbf
-2026-07-27 16:36:10,312 - julearn - INFO - Tuning hyperparameter C = [0.01, 0.1]
-2026-07-27 16:36:10,312 - julearn - INFO - Tuning hyperparameter gamma = [0.01, 0.001, 'scale']
-2026-07-27 16:36:10,312 - julearn - INFO - Step added
-2026-07-27 16:36:10,312 - julearn - INFO - ==== Input Data ====
-2026-07-27 16:36:10,312 - julearn - INFO - Using dataframe as input
-2026-07-27 16:36:10,313 - julearn - INFO -      Features: ['frontal', 'parietal']
-2026-07-27 16:36:10,313 - julearn - INFO -      Target: event
-2026-07-27 16:36:10,313 - julearn - INFO -      Expanded features: ['frontal', 'parietal']
-2026-07-27 16:36:10,313 - julearn - INFO -      X_types:{}
-2026-07-27 16:36:10,313 - julearn - WARNING - The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
-/tmp/tmp5g9j4ven/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-07-27 16:37:13,964 - julearn - INFO - Adding step zscore that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:37:13,965 - julearn - INFO - Step added
+2026-07-27 16:37:13,965 - julearn - INFO - Adding step svm that applies to ColumnTypes&lt;types={'continuous'}; pattern=(?:__:type:__continuous)&gt;
+2026-07-27 16:37:13,965 - julearn - INFO - Setting hyperparameter kernel = rbf
+2026-07-27 16:37:13,965 - julearn - INFO - Tuning hyperparameter C = [0.01, 0.1]
+2026-07-27 16:37:13,965 - julearn - INFO - Tuning hyperparameter gamma = [0.01, 0.001, 'scale']
+2026-07-27 16:37:13,966 - julearn - INFO - Step added
+2026-07-27 16:37:13,966 - julearn - INFO - ==== Input Data ====
+2026-07-27 16:37:13,966 - julearn - INFO - Using dataframe as input
+2026-07-27 16:37:13,966 - julearn - INFO -      Features: ['frontal', 'parietal']
+2026-07-27 16:37:13,966 - julearn - INFO -      Target: event
+2026-07-27 16:37:13,966 - julearn - INFO -      Expanded features: ['frontal', 'parietal']
+2026-07-27 16:37:13,967 - julearn - INFO -      X_types:{}
+2026-07-27 16:37:13,967 - julearn - WARNING - The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
+/tmp/tmpynqax7n0/julearn/prepare.py:609: RuntimeWarning: The following columns are not defined in X_types: ['frontal', 'parietal']. They will be treated as continuous.
   warn_with_log(
-2026-07-27 16:36:10,314 - julearn - INFO - ====================
-2026-07-27 16:36:10,314 - julearn - INFO -
-2026-07-27 16:36:10,314 - julearn - INFO - = Model Parameters =
-2026-07-27 16:36:10,314 - julearn - INFO - Tuning hyperparameters using grid
-2026-07-27 16:36:10,314 - julearn - INFO - Hyperparameters:
-2026-07-27 16:36:10,314 - julearn - INFO -      svm__C: [0.01, 0.1]
-2026-07-27 16:36:10,314 - julearn - INFO -      svm__gamma: [0.01, 0.001, 'scale']
-2026-07-27 16:36:10,314 - julearn - INFO - Using inner CV scheme KFold(n_splits=2, random_state=None, shuffle=False)
-2026-07-27 16:36:10,315 - julearn - INFO - Search Parameters:
-2026-07-27 16:36:10,315 - julearn - INFO -      cv: KFold(n_splits=2, random_state=None, shuffle=False)
-2026-07-27 16:36:10,315 - julearn - INFO - ====================
-2026-07-27 16:36:10,315 - julearn - INFO -
-2026-07-27 16:36:10,315 - julearn - INFO - = Data Information =
-2026-07-27 16:36:10,315 - julearn - INFO -      Problem type: classification
-2026-07-27 16:36:10,315 - julearn - INFO -      Number of samples: 532
-2026-07-27 16:36:10,315 - julearn - INFO -      Number of features: 2
-2026-07-27 16:36:10,316 - julearn - INFO - ====================
-2026-07-27 16:36:10,316 - julearn - INFO -
-2026-07-27 16:36:10,316 - julearn - INFO -      Number of classes: 2
-2026-07-27 16:36:10,316 - julearn - INFO -      Target type: str
-2026-07-27 16:36:10,316 - julearn - INFO -      Class distributions: event
+2026-07-27 16:37:13,968 - julearn - INFO - ====================
+2026-07-27 16:37:13,968 - julearn - INFO -
+2026-07-27 16:37:13,968 - julearn - INFO - = Model Parameters =
+2026-07-27 16:37:13,968 - julearn - INFO - Tuning hyperparameters using grid
+2026-07-27 16:37:13,968 - julearn - INFO - Hyperparameters:
+2026-07-27 16:37:13,969 - julearn - INFO -      svm__C: [0.01, 0.1]
+2026-07-27 16:37:13,969 - julearn - INFO -      svm__gamma: [0.01, 0.001, 'scale']
+2026-07-27 16:37:13,969 - julearn - INFO - Using inner CV scheme KFold(n_splits=2, random_state=None, shuffle=False)
+2026-07-27 16:37:13,969 - julearn - INFO - Search Parameters:
+2026-07-27 16:37:13,969 - julearn - INFO -      cv: KFold(n_splits=2, random_state=None, shuffle=False)
+2026-07-27 16:37:13,970 - julearn - INFO - ====================
+2026-07-27 16:37:13,970 - julearn - INFO -
+2026-07-27 16:37:13,970 - julearn - INFO - = Data Information =
+2026-07-27 16:37:13,970 - julearn - INFO -      Problem type: classification
+2026-07-27 16:37:13,970 - julearn - INFO -      Number of samples: 532
+2026-07-27 16:37:13,970 - julearn - INFO -      Number of features: 2
+2026-07-27 16:37:13,971 - julearn - INFO - ====================
+2026-07-27 16:37:13,971 - julearn - INFO -
+2026-07-27 16:37:13,971 - julearn - INFO -      Number of classes: 2
+2026-07-27 16:37:13,971 - julearn - INFO -      Target type: str
+2026-07-27 16:37:13,972 - julearn - INFO -      Class distributions: event
 cue     266
 stim    266
 Name: count, dtype: int64
-2026-07-27 16:36:10,317 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
-2026-07-27 16:36:10,317 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
-/tmp/tmp5g9j4ven/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+2026-07-27 16:37:13,973 - julearn - INFO - Using outer CV scheme KFold(n_splits=5, random_state=None, shuffle=False) (incl. final model)
+2026-07-27 16:37:13,973 - julearn - WARNING - The kind of values in y (str) is not suitable for a classification. Values should be numeric.
+/tmp/tmpynqax7n0/julearn/prepare.py:422: RuntimeWarning: The kind of values in y (str) is not suitable for a classification. Values should be numeric.
   warn_with_log(
-2026-07-27 16:36:10,318 - julearn - INFO - Binary classification problem detected.
+2026-07-27 16:37:13,974 - julearn - INFO - Binary classification problem detected.
 0.7087109857168048
 {'svm__C': 0.1, 'svm__gamma': 'scale'}
 </pre></div>
@@ -993,7 +993,7 @@ Name: count, dtype: int64
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>0.5
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.879 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.898 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-03-complex-models-run-hyperparameter-tuning-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d0389f5847861aaa8d73951eceed9f91/run_hyperparameter_tuning.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">run_hyperparameter_tuning.ipynb</span></code></a></p>
@@ -1071,7 +1071,7 @@ Name: count, dtype: int64
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=8af287f3"></script>
+</div><script src="../../_static/documentation_options.js?v=76839d54"></script>
 <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -75,13 +75,13 @@ Set the logging level to info to see extra information.
 
  .. code-block:: none
 
-    2026-07-27 16:36:00,895 - julearn - INFO - ===== Lib Versions =====
-    2026-07-27 16:36:00,895 - julearn - INFO - numpy: 2.5.1
-    2026-07-27 16:36:00,895 - julearn - INFO - scipy: 1.18.0
-    2026-07-27 16:36:00,895 - julearn - INFO - sklearn: 1.8.0
-    2026-07-27 16:36:00,895 - julearn - INFO - pandas: 3.0.5
-    2026-07-27 16:36:00,896 - julearn - INFO - julearn: 0.2.6.dev484
-    2026-07-27 16:36:00,896 - julearn - INFO - ========================
+    2026-07-27 16:37:00,507 - julearn - INFO - ===== Lib Versions =====
+    2026-07-27 16:37:00,507 - julearn - INFO - numpy: 2.5.1
+    2026-07-27 16:37:00,507 - julearn - INFO - scipy: 1.18.0
+    2026-07-27 16:37:00,507 - julearn - INFO - sklearn: 1.8.0
+    2026-07-27 16:37:00,508 - julearn - INFO - pandas: 3.0.5
+    2026-07-27 16:37:00,508 - julearn - INFO - julearn: 0.2.6.dev480
+    2026-07-27 16:37:00,508 - julearn - INFO - ========================
 
 
 
@@ -147,7 +147,7 @@ We will try to predict the species.
 .. code-block:: pytb
 
     Traceback (most recent call last):
-      File "/tmp/tmp5g9j4ven/examples/03_complex_models/run_xgboost_early_stopping.py", line 38, in <module>
+      File "/tmp/tmpynqax7n0/examples/03_complex_models/run_xgboost_early_stopping.py", line 38, in <module>
         model = XGBClassifierCVEarlyStopping()
     TypeError: XGBClassifierCVEarlyStopping.__init__() missing 2 required positional arguments: 'test_size' and 'early_stopping_rounds'
 
@@ -157,7 +157,7 @@ We will try to predict the species.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.006 seconds)
+   **Total running time of the script:** (0 minutes 0.008 seconds)
 
 
 .. _sphx_glr_download_auto_examples_03_complex_models_run_xgboost_early_stopping.py:
